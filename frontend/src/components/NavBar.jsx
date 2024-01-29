@@ -19,7 +19,7 @@ const NavBar = () => {
       </div>
 
       {/* Middle */}
-      <div className="mid h-[60px] flex justify-between items-center border border-black bg-[#D9D9D9] ">
+      <div className="mid h-[60px] flex justify-between items-center border border-slate-200 bg-[#D9D9D9] ">
         <img
           src={logo}
           alt=""
