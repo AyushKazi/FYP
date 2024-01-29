@@ -8,25 +8,35 @@ const NavBar = () => {
   return (
     <>
       {/* top */}
-      <div className="top bg-slate-800 text-white text-xs py-1  md:text-sm ">
-        Connect with us !!
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full bg-[#2C2C2C]">
+        <div className="top bg-[#2C2C2C] text-white text-xs h-[30px] md:flex items-center px-4 hidden md:text-sm ">
+          Connect with us !!
+        </div>
+
+        <div className="bottom bg-[#2C2C2C] text-white text-xs h-[30px] flex justify-center items-center text-center md:text-sm  ">
+          Grab the deals !! 15% OFF
+        </div>
       </div>
 
       {/* Middle */}
-      <div className="mid flex justify-between items-center bg-[#D9D9D9] h-10">
-        <img src={logo} alt="" className=" w-24 h-6 mx-2 my-2" />
+      <div className="mid h-[60px] flex justify-between items-center border border-black bg-[#D9D9D9] ">
+        <img
+          src={logo}
+          alt=""
+          className=" w-30 h-7 mx-4 ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 border border-black"
+        />
 
         {/* Search Bar */}
-        <div className="search flex relative  ">
+        <div className="search flex relative border border-black h-[35px]  w-1/2 ">
           <input
-            className="rounded-xl h-6 my-1 px-2 drop-shadow-2xl placeholder:text-sm sm:w-96 md:w-[450px] lg:w-[700px]"
+            className="rounded-lg px-4 w-full h-full drop-shadow-2xl placeholder:text-sm "
             type="text"
             placeholder="Search "
           ></input>
           <IoIosSearch className="absolute top-2 right-2 " />
         </div>
 
-        <div className="right flex items-center  mx-2  space-x-3 mr-4">
+        <div className="right flex items-center  mx-2 border border-black  space-x-3 mr-6">
           <PiShoppingCartFill className=" size-6" />
           <PiUserBold className="mx-2 size-5 md:hidden" />
           <span className="log hidden text-sm font-light md:block">LOGIN</span>
@@ -38,9 +48,6 @@ const NavBar = () => {
       </div>
 
       {/* Bottom */}
-      <div className="bottom bg-slate-800 text-white text-xs py-1 text-center md:text-sm  ">
-        Grab the deals !! 15% OFF
-      </div>
     </>
   );
 };
