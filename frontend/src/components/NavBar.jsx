@@ -39,15 +39,15 @@ const NavBar = () => {
         <div className="right flex items-center  mx-2 border border-black  space-x-3 mr-6">
           <PiShoppingCartFill className=" size-6" />
           <PiUserBold className="mx-2 size-5 md:hidden" />
-          <span className="log hidden text-sm font-light md:block">LOGIN</span>
-          <span className="sign hidden text-sm font-light md:block">
+          <a href="/login" className="log hidden text-sm font-light md:block">
+            LOGIN
+          </a>
+          <a href="/signup" className="sign hidden text-sm font-light md:block">
             {" "}
             SIGN UP
-          </span>
+          </a>
         </div>
       </div>
-
-      {/* Bottom */}
     </>
   );
 };

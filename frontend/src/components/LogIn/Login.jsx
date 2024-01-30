@@ -13,7 +13,7 @@ export const Login = () => {
             <input
               type="email"
               id="email"
-              className="email border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm focus:shadow-lg  focus:outline-slate-400 "
+              className="email border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
               placeholder="Email"
               required
             />
@@ -21,7 +21,7 @@ export const Login = () => {
             <input
               type="password"
               id="password"
-              className=" border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm focus:shadow-lg  focus:outline-slate-400 "
+              className=" border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
               placeholder="Password"
               required
             />
@@ -33,7 +33,7 @@ export const Login = () => {
           </div>
           <button
             type="submit"
-            className="login bg-[#2C2C2C] text-white my-4 rounded-sm text-sm p-1 w-full"
+            className="login bg-[#2C2C2C] text-white my-4 rounded-sm text-sm md:text-base py-2 w-full shadow-lg hover:bg-black"
           >
             Login
           </button>
