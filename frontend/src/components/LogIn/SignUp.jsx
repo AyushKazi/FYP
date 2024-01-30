@@ -4,7 +4,7 @@ const SignUp = () => {
   return (
     <>
       <div className="flex border border-red-600  justify-center items-center my-10 h-[-100px] ">
-        <div className="border  p-4 rounded-lg shadow-2xl w-3/4 sm:w-2/3 space-y-5 md:w-1/2 lg:w-1/3  ">
+        <div className="border   px-6 py-4 rounded-lg shadow-2xl w-3/4 sm:max-w-screen-sm space-y-5 md:max-w-prose  lg:max-w-prose   ">
           <h1 className="text-xl  mb-4 font-semibold">Sign Up</h1>
 
           {/* input fields */}
@@ -67,9 +67,9 @@ const SignUp = () => {
           </div>
           <button
             type="submit"
-            className="login bg-[#2C2C2C] text-white my-4 rounded-sm text-sm md:text-base py-2 w-full shadow-lg hover:bg-black"
+            className="signup bg-[#2C2C2C] text-white my-4 rounded-sm text-sm md:text-base py-2 w-full shadow-lg hover:bg-black"
           >
-            Login
+            Sign Up
           </button>
           <div className="text-xs flex justify-center">
             <p className="forgot">
