@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   return (
@@ -40,9 +41,12 @@ export const Login = () => {
           <div className="text-xs">
             <p className="forgot">
               Create new account?{" "}
-              <a href="#" className="signup underline underline-offset-1">
+              <Link
+                to="/signup"
+                className="signup underline underline-offset-1"
+              >
                 Sign up
-              </a>
+              </Link>
             </p>
           </div>
         </div>
