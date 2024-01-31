@@ -3,6 +3,8 @@ import { PiShoppingCartFill } from "react-icons/pi";
 import { PiUserBold } from "react-icons/pi";
 import { IoIosSearch } from "react-icons/io";
 import logo from "../assets/electroLogo.png";
+import { Link } from "react-router-dom";
+import Products from "../routes/Products";
 
 const NavBar = () => {
   return (
@@ -37,15 +39,24 @@ const NavBar = () => {
         </div>
 
         <div className="right flex items-center  mx-2 border border-black  space-x-3 mr-6">
-          <PiShoppingCartFill className=" size-6" />
-          <PiUserBold className="mx-2 size-5 md:hidden" />
-          <a href="/login" className="log hidden text-sm font-light md:block">
+          <Link to="/">
+            <PiShoppingCartFill className=" size-6" />
+          </Link>
+
+          <Link to="/signup">
+            <PiUserBold className="mx-2 size-5 md:hidden" onClick={"/signup"} />
+          </Link>
+
+          <Link to="/login" className="log hidden text-sm font-light md:block">
             LOGIN
-          </a>
-          <a href="/signup" className="sign hidden text-sm font-light md:block">
+          </Link>
+          <Link
+            to="/signup"
+            className="sign hidden text-sm font-light md:block"
+          >
             {" "}
             SIGN UP
-          </a>
+          </Link>
         </div>
       </div>
     </>
