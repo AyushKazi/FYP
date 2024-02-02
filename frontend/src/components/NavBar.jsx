@@ -44,7 +44,7 @@ const NavBar = () => {
           </Link>
 
           <Link to="/signup">
-            <PiUserBold className="mx-2 size-5 md:hidden" onClick={"/signup"} />
+            <PiUserBold className="mx-2 size-5 md:hidden" />
           </Link>
 
           <Link to="/login" className="log hidden text-sm font-light md:block">
