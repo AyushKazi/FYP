@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
   return (
     <>
-      <div className="flex border border-red-600  justify-center items-center my-10 h-[-100px] ">
-        <div className="border  py-4 px-6 rounded-lg shadow-2xl w-3/4 sm:max-w-prose space-y-5 md:max-w-prose  lg:max-w-prose  ">
+      <div className="flex  justify-center items-center my-10 h-[-100px] ">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="border  py-4 px-6 rounded-lg shadow-2xl w-3/4 sm:max-w-prose space-y-5 md:max-w-prose  lg:max-w-prose  "
+        >
           <h1 className="text-xl  mb-4 font-semibold">Login to your account</h1>
 
           {/* input fields */}
@@ -13,19 +25,30 @@ export const Login = () => {
             {/* email */}
             <input
               type="email"
-              id="email"
+              // id="email"
+              name="email"
               className="email border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
               placeholder="Email"
-              required
+              {...register("email", { required: true })}
             />
+            {errors.email?.type === "required" && (
+              <p className="text-red-500 text-sm">Email is required.</p>
+            )}
             {/* password */}
             <input
               type="password"
-              id="password"
+              name="password"
+              // id="password"
               className=" border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
               placeholder="Password"
-              required
+              {...register("password", { required: true, minLength: 6 })}
             />
+            {errors.password?.type === "required" && (
+              <p className="text-red-500 text-sm">Password is required.</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p className="text-red-500 text-sm">Min Length did not match.</p>
+            )}
           </div>
           <div>
             <a href="#" className="forgot text-xs underline underline-offset-1">
@@ -49,7 +72,7 @@ export const Login = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );
