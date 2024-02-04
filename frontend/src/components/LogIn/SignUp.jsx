@@ -116,9 +116,7 @@ const SignUp = () => {
               {errors.c_password?.type === "required" && (
                 <p className="text-red-500 text-sm ">Password is required.</p>
               )}
-              {/* {errors.c_password?.type === "minLength" && (
-                <p className="text-red-500 text-sm ">Password must be same.</p>
-              )} */}
+
               {/* checking the password is equal to confirm password or not */}
               {watch("c_password") !== watch("password") &&
               getValues("c_password") ? (

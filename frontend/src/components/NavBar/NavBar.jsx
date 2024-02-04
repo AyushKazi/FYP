@@ -2,9 +2,9 @@ import React from "react";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { PiUserBold } from "react-icons/pi";
 import { IoIosSearch } from "react-icons/io";
-import logo from "../assets/electroLogo.png";
+import logo from "../../assets/electroLogo.png";
 import { Link } from "react-router-dom";
-import Products from "../routes/Products";
+import Products from "../../routes/Products";
 
 const NavBar = () => {
   return (
