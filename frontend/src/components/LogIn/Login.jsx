@@ -5,11 +5,16 @@ import { useForm } from "react-hook-form";
 export const Login = () => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    alert(JSON.stringify(data));
+    reset();
+  };
 
   return (
     <>
@@ -23,32 +28,40 @@ export const Login = () => {
           {/* input fields */}
           <div className=" space-y-6">
             {/* email */}
-            <input
-              type="email"
-              // id="email"
-              name="email"
-              className="email border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
-              placeholder="Email"
-              {...register("email", { required: true })}
-            />
-            {errors.email?.type === "required" && (
-              <p className="text-red-500 text-sm">Email is required.</p>
-            )}
+
+            <div className="flex flex-col space-y-3">
+              <input
+                type="email"
+                // id="email"
+                name="email"
+                className="email border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
+                placeholder="Email"
+                {...register("email", { required: true })}
+              />
+              {errors.email?.type === "required" && (
+                <p className="text-red-500 text-sm">Email is required.</p>
+              )}
+            </div>
+
             {/* password */}
-            <input
-              type="password"
-              name="password"
-              // id="password"
-              className=" border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
-              placeholder="Password"
-              {...register("password", { required: true, minLength: 6 })}
-            />
-            {errors.password?.type === "required" && (
-              <p className="text-red-500 text-sm">Password is required.</p>
-            )}
-            {errors.password?.type === "minLength" && (
-              <p className="text-red-500 text-sm">Min Length did not match.</p>
-            )}
+            <div className="flex flex-col space-y-3">
+              <input
+                type="password"
+                name="password"
+                // id="password"
+                className=" border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
+                placeholder="Password"
+                {...register("password", { required: true, minLength: 6 })}
+              />
+              {errors.password?.type === "required" && (
+                <p className="text-red-500 text-sm">Password is required.</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500 text-sm">
+                  Min Length did not match.
+                </p>
+              )}
+            </div>
           </div>
           <div>
             <a href="#" className="forgot text-xs underline underline-offset-1">
