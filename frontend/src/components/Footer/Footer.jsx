@@ -5,7 +5,7 @@ import { FaInstagram } from "react-icons/fa";
 const Footer = () => {
   return (
     <div className="bg-[#2C2C2C]">
-      <div className="footer grid grid-cols-1 bg-[#2C2C2C] lg:grid-cols-3">
+      <div className="footer max-w-screen-2xl mx-auto grid grid-cols-1 bg-[#2C2C2C] lg:grid-cols-3">
         {/* news letter */}
         <div className="letter  px-5 py-4 md:px-10 lg:px-14">
           <h1 className="font-medium text-2xl text-white my-3">
