@@ -1,5 +1,6 @@
 import React from "react";
 import ProductCard from "../components/Product/ProductCard";
+import Banner from "../components/Product/Banner";
 
 const Products = () => {
   return (
@@ -13,7 +14,8 @@ const Products = () => {
       <div className="reviews"></div>
 
       <div className="recommendations"></div> */}
-      <div className="grid grid-cols-1 border border-red-500 my-4 justify-items-center mx-auto max-w-screen-2xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+      <Banner />
+      <div className="flex flex-wrap justify-center">
         <ProductCard />
         <ProductCard />
         <ProductCard />

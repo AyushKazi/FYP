@@ -50,7 +50,7 @@ const Rating = ({ value, text }) => {
         )}
       </span>
 
-      <span className="px-3">{text && text}</span>
+      <span className="px-2">{text && text}</span>
     </div>
   );
 };
