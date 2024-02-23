@@ -19,12 +19,12 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="flex border border-red-600  justify-center items-center my-10 h-[-100px] ">
+      <div className="flex   justify-center items-center my-10 h-[-100px] ">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="border   px-6 py-4 rounded-lg shadow-2xl w-3/4 sm:max-w-screen-sm space-y-5 md:max-w-prose  lg:max-w-prose   "
         >
-          <h1 className="text-xl  mb-4 font-semibold">Sign Up</h1>
+          <h1 className="text-2xl  mb-4 font-semibold">Sign Up</h1>
 
           {/* input fields */}
           <div className="names grid grid-cols-2 space-x-2  ">
