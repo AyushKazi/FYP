@@ -14,9 +14,6 @@ export const sequelize = new Sequelize("electro", "root", "", {
 //   }
 // };
 
-//making table
-// sequelize.sync();
-
 export const db = () => {
   sequelize
     .authenticate()
@@ -27,3 +24,13 @@ export const db = () => {
       console.log("Unable to connect to db ", error);
     });
 };
+
+//making table
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Tables synchronized successfully!");
+  })
+  .catch((error) => {
+    console.error("Error synchronizing tables:", error);
+  });
