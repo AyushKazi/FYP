@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 const PORT = 3000;
 const app = express();
 
+// database connection
 db();
 
 //decodes the url
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("From the server");
+  res.send("From the FYP server");
 });
 
 //base url
