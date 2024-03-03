@@ -15,11 +15,22 @@ const Products = () => {
 
       <div className="recommendations"></div> */}
       <Banner />
-      <div className="flex flex-wrap justify-center">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+      <div className="border border-red-500 px-6 py-10 ">
+        {/* title */}
+        <div className="title">
+          <span className="font-medium text-xl px-4 tracking-wide border border-blue-400">
+            Featured Products
+          </span>
+        </div>
+
+        {/* featured products */}
+        <div className="flex flex-wrap justify-evenly border border-red-500 px-4">
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </div>
+        {/* end of featured products */}
       </div>
     </>
   );

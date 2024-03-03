@@ -5,13 +5,15 @@ import Rating from "./Rating";
 const ProductCard = () => {
   return (
     <>
-      <div className="card border border-slate-300 shadow-2xl  rounded-sm my-12 mx-3 w-72 space-y-3 bg-[#F0F0F0] ">
+      <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] ">
         {/* image */}
         <div className="img border border-slate-300">
           <img src={monitor} alt="" className="object-fill" />
         </div>
 
-        <div className="px-4 space-y-3 ">
+        {/* card informations */}
+
+        <div className="px-4 py-2 space-y-2 border border-red-500">
           {/* title */}
           <div className="title text-3xl font-medium tracking-wide ">
             4K Monitor
@@ -23,17 +25,23 @@ const ProductCard = () => {
           </div>
 
           {/* price */}
-          <div className="price text-red-700 line-through text-xl">
-            NPR 20000/-
+          <div className="price flex  space-x-1  ">
+            <div className="price text-red-700 line-through pt-1  ">
+              NPR 20000/-
+            </div>
+            <div className="price text-xl  ">NPR 18000/-</div>
           </div>
-          <div className="price text-3xl">NPR 18000/-</div>
+          {/* end of price */}
+
           {/* add to cart button */}
-          <div className="button mt-2">
-            <button className="w-full py-2 my-2 bg-[#7D7D7D] text-white rounded-sm">
+          <div className="button">
+            <button className="w-full py-2 bg-[#7D7D7D] text-white rounded-sm">
               Add to Cart
             </button>
           </div>
         </div>
+
+        {/* end of card information */}
       </div>
     </>
   );
