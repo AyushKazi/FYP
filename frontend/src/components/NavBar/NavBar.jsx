@@ -21,7 +21,7 @@ const NavBar = () => {
       </div>
 
       {/* Middle */}
-      <div className="bg-[#D9D9D9]">
+      <div className="bg-[#D9D9D9] ">
         <div className="mid h-[60px] flex justify-around items-center  bg-[#D9D9D9] max-w-screen-2xl mx-auto  border border-slate-200">
           <img
             src={logo}
@@ -52,7 +52,7 @@ const NavBar = () => {
 
             <Link
               to="/login"
-              className="log hidden text-sm font-medium md:block bg-white px-4 py-1 rounded-sm hover:bg-black hover:text-white transition-all duration-500"
+              className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white hover:text-black transition-all duration-500"
             >
               LOGIN
             </Link>
