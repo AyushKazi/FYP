@@ -5,6 +5,7 @@ import { IoIosSearch } from "react-icons/io";
 import logo from "../../assets/electroLogo.png";
 import { Link } from "react-router-dom";
 import Products from "../../routes/Products";
+import CartPage from "../../routes/CartPage";
 
 const NavBar = () => {
   return (
@@ -23,26 +24,28 @@ const NavBar = () => {
       {/* Middle */}
       <div className="bg-[#D9D9D9] ">
         <div className="mid h-[60px] flex justify-around items-center  bg-[#D9D9D9] max-w-screen-2xl mx-auto  border border-slate-200">
-          <img
-            src={logo}
-            alt=""
-            className=" w-30 h-7 mx-4 ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
-          />
+          <Link to={"/"}>
+            <img
+              src={logo}
+              alt=""
+              className=" w-30 h-7 mx-12 ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
+            />
+          </Link>
 
           {/* Search Bar */}
-          <div className="search flex relative  h-[35px]  w-1/2 ">
+          <div className="search flex relative items-center  h-[35px]  w-1/2 ">
             <input
-              className="rounded-lg px-4 w-full h-full drop-shadow-2xl placeholder:text-sm "
+              className="rounded-full px-6 w-full h-full drop-shadow-2xl  "
               type="text"
               placeholder="Search "
             ></input>
-            <IoIosSearch className="absolute top-2 right-2 " />
+            <IoIosSearch className="absolute top-2 text-lg right-5  " />
           </div>
 
           {/* buttons */}
 
           <div className="right flex items-center  mx-4 space-x-3  ">
-            <Link to="/">
+            <Link to="/cart">
               <PiShoppingCartFill className=" size-6" />
             </Link>
 

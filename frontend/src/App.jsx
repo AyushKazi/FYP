@@ -5,6 +5,8 @@ import SignUp from "./components/LogIn/SignUp";
 import ErrorPage from "./components/Error/ErrorPage";
 import RootLayout from "./routes/RootLayout";
 import Products from "./routes/Products";
+import ProductDetailPage from "./routes/ProductDetailPage";
+import CartPage from "./routes/CartPage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,8 @@ const router = createBrowserRouter([
       { path: "/", element: <Products />, index: true },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <SignUp /> },
+      { path: "/products/:id", element: <ProductDetailPage /> },
+      { path: "/cart", element: <CartPage /> },
     ],
   },
 ]);

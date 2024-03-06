@@ -16,16 +16,16 @@ const Products = () => {
 
       <div className="recommendations"></div> */}
       <Banner />
-      <div className=" px-6 py-6 border border-red-800 max-w-screen-2xl mx-auto ">
+      <div className=" px-6 py-6  max-w-screen-2xl mx-auto ">
         {/* title */}
-        <div className="title flex justify-center py-1 ">
-          <span className="font-medium text-xl md:text-2xl px-4 tracking-wide ">
-            All Featured Products
+        <div className="title flex justify-center  py-2">
+          <span className="font-medium text-xl uppercase md:text-2xl px-4 tracking-wide ">
+            Featured Products
           </span>
         </div>
 
         {/* featured products */}
-        <div className="flex flex-wrap justify-evenly  px-4 border border-red-400">
+        <div className="flex flex-wrap justify-evenly  px-4 ">
           <ProductCard />
           <ProductCard />
           <ProductCard />
@@ -36,13 +36,15 @@ const Products = () => {
 
         {/* categories  title*/}
         <div className="title flex justify-center py-2  my-3 ">
-          <span className="font-medium text-xl md:text-2xl px-4 tracking-wide ">
-            All Categories
+          <span className="font-medium uppercase text-xl md:text-2xl px-4 tracking-wide ">
+            Our Categories
           </span>
         </div>
 
         {/* category list */}
         <div className=" flex flex-wrap justify-evenly  px-4 py-2 ">
+          <CategoryCard />
+          <CategoryCard />
           <CategoryCard />
           <CategoryCard />
           <CategoryCard />
