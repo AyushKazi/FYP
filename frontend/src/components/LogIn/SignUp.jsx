@@ -19,7 +19,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="flex   justify-center items-center my-10 h-[-100px] ">
+      <div className="flex   justify-center items-center my-20 h-[-100px] ">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="border   px-6 py-4 rounded-lg shadow-2xl w-3/4 sm:max-w-screen-sm space-y-5 md:max-w-prose  lg:max-w-prose   "
@@ -140,12 +140,15 @@ const SignUp = () => {
             type="submit"
             className="signup bg-[#2C2C2C] text-white my-4 rounded-sm text-sm md:text-base py-2 w-full shadow-lg hover:bg-black"
           >
-            Sign Up
+            SIGN UP
           </button>
           <div className="text-xs flex justify-center">
             <p className="forgot">
               Already have a account?{" "}
-              <Link to="/login" className="signup underline underline-offset-1">
+              <Link
+                to="/login"
+                className="signup uppercase underline underline-offset-1 hover:text-red-500 hover:tracking-wide"
+              >
                 Login
               </Link>
             </p>

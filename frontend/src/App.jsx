@@ -7,6 +7,7 @@ import RootLayout from "./routes/RootLayout";
 import Products from "./routes/Products";
 import ProductDetailPage from "./routes/ProductDetailPage";
 import CartPage from "./routes/CartPage";
+import Checkout from "./routes/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUp /> },
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
+      { path: "/checkout", element: <Checkout /> },
     ],
   },
 ]);

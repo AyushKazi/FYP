@@ -18,7 +18,7 @@ export const Login = () => {
 
   return (
     <>
-      <div className="flex  justify-center items-center my-10 h-[-100px] ">
+      <div className="flex  justify-center items-center my-24 h-[-100px] ">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="border  py-4 px-6 rounded-lg shadow-2xl w-3/4 sm:max-w-prose space-y-5 md:max-w-prose  lg:max-w-prose  "
@@ -64,7 +64,10 @@ export const Login = () => {
             </div>
           </div>
           <div>
-            <a href="#" className="forgot text-xs underline underline-offset-1">
+            <a
+              href="#"
+              className="cursor-pointer  relative text-xs w-fit block after:block after:content-[''] after:absolute after:h-[1px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left"
+            >
               Forgot your password?
             </a>
           </div>
@@ -72,14 +75,14 @@ export const Login = () => {
             type="submit"
             className="login bg-[#2C2C2C] text-white my-4 rounded-sm text-sm md:text-base py-2 w-full shadow-lg hover:bg-black"
           >
-            Login
+            LOGIN
           </button>
           <div className="text-xs">
             <p className="forgot">
               Create new account?{" "}
               <Link
                 to="/signup"
-                className="signup underline underline-offset-1"
+                className="signup underline underline-offset-1 uppercase hover:text-red-500 hover:tracking-wide"
               >
                 Sign up
               </Link>

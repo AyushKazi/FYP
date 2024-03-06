@@ -30,7 +30,6 @@ const Products = () => {
           <ProductCard />
           <ProductCard />
           <ProductCard />
-          <ProductCard />
         </div>
         {/* end of featured products */}
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CartSubTotal = () => {
   return (
@@ -27,9 +28,11 @@ const CartSubTotal = () => {
           </div>
 
           <div className="button">
-            <button className="w-full md:w-full py-3 mb-3  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
-              Proceed to Checkout
-            </button>
+            <Link to={"/checkout"}>
+              <button className="w-full md:w-full py-3 mb-3  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
+                Proceed to Checkout
+              </button>
+            </Link>
           </div>
         </div>
       </div>

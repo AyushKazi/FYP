@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ProductCard = () => {
   return (
     <>
-      <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] hover:scale-105  hover:duration-300 hover:ease-in-out ">
+      <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] hover:scale-105  hover:duration-300 hover:ease-in-out mx-3 ">
         {/* image */}
         <Link to={"/products/1"}>
           <div className="img border border-slate-300">

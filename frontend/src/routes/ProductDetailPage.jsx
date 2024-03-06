@@ -25,11 +25,13 @@ const ProductDetailPage = () => {
           </div>
 
           {/* details grid 2 */}
-          <div className="details space-y-3 lg:space-y-6 mt-3 md:mt-0 px-2 md:mx-4 lg:mx-6 relative">
+          <div className="details space-y-3  lg:space-y-6 mt-3 md:mt-0 px-2 md:mx-4 lg:mx-6 relative">
             {/* title */}
             <div className="title font-semibold text-3xl lg:text-4xl ">
               Samsung Galaxy Edge 7
             </div>
+
+            <hr className="border border-neutral-200" />
 
             <div className="catBrand flex space-x-4 ">
               {/* category */}
@@ -56,6 +58,7 @@ const ProductDetailPage = () => {
             <div className="price text-3xl  lg:text-4xl font-light">
               NPR. 50000 /-
             </div>
+            <hr className="border border-neutral-200" />
 
             {/* div for after md breakpoint to align items stick to bottom */}
             <div className="space-y-3 lg:space-y-4  flex flex-col lg:absolute bottom-0  lg:w-1/2">
