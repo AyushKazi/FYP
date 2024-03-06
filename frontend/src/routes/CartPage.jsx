@@ -11,15 +11,15 @@ const CartPage = () => {
           Cart Items
         </div>
 
-        <div className="twoDivs flex flex-col lg:flex-row justify-between  my-6 md:my-14 lg:max-w-2/3 ">
+        <div className="twoDivs flex flex-col lg:flex-row justify-between  my-6 md:my-14  ">
           {/* products detail titles 1 */}
-          <div className="">
+          <div className="w-full">
             <CartCard />
             <CartCard />
             <CartCard />
           </div>
           {/* subtotal  */}
-          <div className="lg:w-1/3">
+          <div className="lg:w-2/5">
             <CartSubTotal />
           </div>
         </div>
