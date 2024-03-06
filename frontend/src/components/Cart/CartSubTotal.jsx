@@ -3,7 +3,7 @@ import React from "react";
 const CartSubTotal = () => {
   return (
     <>
-      <div className="subtotal bg-neutral-200 border-x-2 border-neutral-800 rounded-lg mt-8 lg:mt-0 p-4 lg:px-6  lg:ml-8 ">
+      <div className="subtotal bg-neutral-200 border-x-2 border-neutral-800 rounded-lg mt-8 lg:mt-0 p-4 lg:px-6  lg:ml-8  ">
         <div className="head font-medium mt-2 mb-4 text-2xl">Cart Total</div>
         <div className="body space-y-6 ">
           <div className="subtotal flex justify-between">

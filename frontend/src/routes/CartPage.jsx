@@ -11,7 +11,7 @@ const CartPage = () => {
           Cart Items
         </div>
 
-        <div className="twoDivs flex flex-col lg:flex-row justify-between  my-6 md:my-14 ">
+        <div className="twoDivs flex flex-col lg:flex-row justify-between  my-6 md:my-14 lg:max-w-2/3 ">
           {/* products detail titles 1 */}
           <div className="">
             <CartCard />

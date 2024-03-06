@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ProductCard = () => {
   return (
     <>
-      <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] hover:scale-105  hover:duration-300 ">
+      <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] hover:scale-105  hover:duration-300 hover:ease-in-out ">
         {/* image */}
         <Link to={"/products/1"}>
           <div className="img border border-slate-300">
@@ -35,7 +35,7 @@ const ProductCard = () => {
 
           {/* add to cart button */}
           <div className="button">
-            <button className="w-full py-2 bg-[#7D7D7D] text-white rounded-sm hover:bg-[#2C2C2C] hover:opacity-90 hover:duration-300">
+            <button className="w-full py-2 border border-black rounded-sm hover:bg-neutral-700 hover:ease-linear hover:left- hover:text-white hover:opacity-90 hover:duration-300">
               Add to Cart
             </button>
           </div>
