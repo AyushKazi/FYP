@@ -1,8 +1,11 @@
 import React from "react";
 import { CartCard } from "../components/Cart/CartCard";
 import CartSubTotal from "../components/Cart/CartSubTotal";
+import { useSelector } from "react-redux";
 
 const CartPage = () => {
+  const { products } = useSelector((state) => state.cart);
+  console.log(products);
   return (
     <>
       <div className="main max-w-screen-xl mx-5 my-4 md:my-10 md:mx-6  lg:mx-10 lg:my-16 xl:mx-auto  ">
@@ -14,9 +17,9 @@ const CartPage = () => {
         <div className="twoDivs flex flex-col lg:flex-row justify-between  my-6 md:my-14  ">
           {/* products detail titles 1 */}
           <div className="w-full">
-            <CartCard />
-            <CartCard />
-            <CartCard />
+            {products.map((product, index) => (
+              <CartCard key={index} />
+            ))}
           </div>
           {/* subtotal  */}
           <div className="lg:w-2/5">

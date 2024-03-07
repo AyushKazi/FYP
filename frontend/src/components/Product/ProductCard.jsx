@@ -2,8 +2,18 @@ import React from "react";
 import monitor from "../../assets/4kMonitor.jpg";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../features/cart-slice";
 
 const ProductCard = () => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(
+      addProduct({ product: { id: 1, name: "4K Monitor", quantity: 1 } })
+    );
+  };
+
   return (
     <>
       <div className="card border border-slate-300 shadow-2xl w-64  rounded-sm my-4 bg-[#F0F0F0] hover:scale-105  hover:duration-300 hover:ease-in-out mx-3 ">
@@ -35,7 +45,10 @@ const ProductCard = () => {
 
           {/* add to cart button */}
           <div className="button">
-            <button className="w-full py-2 border border-black rounded-sm hover:bg-neutral-700 hover:ease-linear hover:left- hover:text-white hover:opacity-90 hover:duration-300">
+            <button
+              onClick={handleAddToCart}
+              className="w-full py-2 border border-black rounded-sm hover:bg-neutral-700 hover:ease-linear hover:left- hover:text-white hover:opacity-90 hover:duration-300"
+            >
               Add to Cart
             </button>
           </div>
