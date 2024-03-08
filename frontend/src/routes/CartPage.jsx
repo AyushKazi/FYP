@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CartCard } from "../components/Cart/CartCard";
 import CartSubTotal from "../components/Cart/CartSubTotal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCart } from "../features/cart-slice";
 
 const CartPage = () => {
   const { products } = useSelector((state) => state.cart);
-  console.log(products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const cartItems = localStorage.getItem("cart");
+    if (cartItems) {
+      dispatch(updateCart({ products: JSON.parse(cartItems) }));
+    }
+  }, []);
+
   return (
     <>
       <div className="main max-w-screen-xl mx-5 my-4 md:my-10 md:mx-6  lg:mx-10 lg:my-16 xl:mx-auto  ">
@@ -18,7 +27,7 @@ const CartPage = () => {
           {/* products detail titles 1 */}
           <div className="w-full">
             {products.map((product, index) => (
-              <CartCard key={index} />
+              <CartCard key={index} product={product} />
             ))}
           </div>
           {/* subtotal  */}

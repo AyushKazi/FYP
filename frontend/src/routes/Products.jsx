@@ -2,6 +2,7 @@ import React from "react";
 import ProductCard from "../components/Product/ProductCard";
 import Banner from "../components/Product/Banner";
 import CategoryCard from "../components/Category/CategoryCard";
+import products from "../data/product";
 
 const Products = () => {
   return (
@@ -26,10 +27,9 @@ const Products = () => {
 
         {/* featured products */}
         <div className="flex flex-wrap justify-evenly  px-4 ">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.map((product) => (
+            <ProductCard product={product} key={product._id} />
+          ))}
         </div>
         {/* end of featured products */}
 
