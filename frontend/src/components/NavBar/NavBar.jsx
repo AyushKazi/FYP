@@ -55,7 +55,7 @@ const NavBar = () => {
 
             <Link
               to="/login"
-              className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white hover:text-black transition-all duration-500"
+              className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500"
             >
               LOGIN
             </Link>

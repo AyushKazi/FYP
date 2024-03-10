@@ -2,8 +2,9 @@ import bycrypt from "bcryptjs";
 import User from "../models/user-model.js";
 import jwt from "jsonwebtoken";
 
-// add new user
-// POST
+// @desc  add new user
+// @route POST api/v1/user/register
+// @access Public
 
 const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, role } = req.body;
@@ -40,8 +41,9 @@ const registerUser = async (req, res) => {
   }
 };
 
-// login user
-//POST
+// @desc  login user
+// @route POST api/v1/user/login
+// @access Public
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -81,4 +83,78 @@ const loginUser = async (req, res) => {
   res.json({ message: "Welcome back!", token: jwtToken });
 };
 
-export { registerUser, loginUser };
+// @desc  logout user / clear cookie
+// @route POST api/v1/user/logout
+// @access PRIVATE
+
+const logout = (req, res) => {
+  res.json({ message: "User logged out" });
+};
+
+// @desc  get user profile
+// @route GET api/v1/user/userProfile
+// @access PRIVATE
+
+const getUserProfile = (req, res) => {
+  res.json({ message: "User profile" });
+};
+
+// @desc  get all users info
+// @route GET api/v1/user/
+// @access PRIVATE (ADMIN)
+
+const getAllUserInfo = (req, res) => {
+  res.json({ message: "All User profile" });
+};
+
+// @desc  forget password
+// @route POST api/v1/user/forgotPassword
+// @access PUBLIC
+
+const forgotPassword = (req, res) => {
+  res.json({ message: "Forgot password" });
+};
+
+const updatePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    // finding user
+    const user = await User.findByPk(req.user.id);
+
+    // comparing the password
+    const isPasswordValid = await bycrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    // checkiing if the old password matches
+    if (!isPasswordValid) {
+      res.status(400);
+      throw new Error("Current password does not match!");
+    }
+
+    //hashing the new password
+    const newHashPassword = bycrypt.hashSync(newPassword, 10);
+
+    //updating the password
+    user.password = newHashPassword;
+
+    await user.save();
+
+    res.json({ message: "Password Updated Successfully!" });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
+
+export {
+  registerUser,
+  loginUser,
+  forgotPassword,
+  getAllUserInfo,
+  getUserProfile,
+  logout,
+  updatePassword,
+};
