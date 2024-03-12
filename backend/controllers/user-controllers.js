@@ -96,7 +96,8 @@ const logout = (req, res) => {
 // @access PRIVATE
 
 const getUserProfile = (req, res) => {
-  res.json({ message: "User profile" });
+  //displays the user profile according to the token with whom it is attached
+  res.json({ user: req.user });
 };
 
 // @desc  get all users info
@@ -111,9 +112,62 @@ const getAllUserInfo = (req, res) => {
 // @route POST api/v1/user/forgotPassword
 // @access PUBLIC
 
-const forgotPassword = (req, res) => {
-  res.json({ message: "Forgot password" });
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  //extracting the user from the provided email
+  const user = await User.findOne({ where: { email } }).catch((err) =>
+    console.log("Error :", err)
+  );
+
+  // if user does not exist with the email
+  if (!user) {
+    res.status(400);
+    throw new Error("This email does not exist!");
+  }
+
+  // if user exist
+
+  const accessToken = createAccessToken({ id: user.id, email: user.email });
+
+  // frontend link to enter a new password
+  const url = `http://localhost:3000/api/v1/user/reset/${accessToken}`;
+
+  console.log(url);
+  res.json({
+    message:
+      "Password reset email sent to your mail. Please check your mail to reset.",
+  });
 };
+
+// @desc  reset password
+// @route POST api/v1/user/resetPassowrd
+// @access PUBLIC
+
+const resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    console.log(password);
+
+    const passwordHash = await bycrypt.hash(password, 10);
+
+    await User.update(
+      {
+        password: passwordHash,
+      },
+      { where: { id: req.user.id } }
+    );
+
+    res.json({ message: "Password successfully changed!" });
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
+};
+
+// @desc  update password
+// @route PUT api/v1/user/updatePassword
+// @access PRIVATE
 
 const updatePassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
@@ -149,6 +203,15 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// access tokken for forget password
+// expires in 15m
+
+const createAccessToken = (payload) => {
+  return jwt.sign(payload, "12345", {
+    expiresIn: "15m",
+  });
+};
+
 export {
   registerUser,
   loginUser,
@@ -156,5 +219,6 @@ export {
   getAllUserInfo,
   getUserProfile,
   logout,
+  resetPassword,
   updatePassword,
 };
