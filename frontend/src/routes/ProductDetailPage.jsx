@@ -9,7 +9,7 @@ const ProductDetailPage = () => {
     <>
       <div className="main max-w-screen-xl mx-3 my-3 md:mx-5 md:my-5 xl:mx-auto lg:mx-7 ">
         <Link to={"/"}>
-          <button className="bg-neutral-700 px-4 mx-2 py-1 text-white rounded-sm">
+          <button className="bg-neutral-700 px-4 mx-2 py-1 text-white rounded-sm hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
             GO BACK
           </button>
         </Link>

@@ -3,6 +3,9 @@ import { Sequelize } from "sequelize";
 export const sequelize = new Sequelize("electro", "root", "", {
   host: "localhost",
   dialect: "mysql",
+  define: {
+    freezeTableName: true,
+  },
 });
 
 // const connectdb = async () => {
@@ -26,11 +29,11 @@ export const db = () => {
 };
 
 //making table
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Tables synchronized successfully!");
-  })
-  .catch((error) => {
-    console.error("Error synchronizing tables:", error);
-  });
+// sequelize
+//   .sync()
+//   .then(() => {
+//     console.log("Tables synchronized successfully!");
+//   })
+//   .catch((error) => {
+//     console.error("Error synchronizing tables:", error);
+//   });
