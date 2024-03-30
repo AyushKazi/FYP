@@ -70,11 +70,16 @@ const loginUser = async (req, res) => {
   if (!isPasswordValid)
     return res.json({ message: "Email or password is wrong" });
 
-  //initializing jwt token with id and email of the user
-  const jwtToken = jwt.sign(
-    { id: userWithEmail.id, email: userWithEmail.email },
-    "12345"
-  );
+  const refreshToken = createRefreshToken({ id: userWithEmail.user_id });
+
+  // setting refresh token in the cookie
+  res.cookie("refreshtoken", refreshToken, {
+    httpOnly: true,
+    // path to get refresh token
+    path: "/api/v1/user/refreshToken",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+
   //checking if the user is admin
   //default is 0 which is customer and 1 is for admin
   if (userWithEmail.role === 1) {
@@ -82,17 +87,58 @@ const loginUser = async (req, res) => {
   }
 
   //message after succesfull login
-  res.json({ message: "Welcome back!", token: jwtToken });
+  res.json({ message: "Welcome back! Login successful", refreshToken });
+};
+
+// @desc    Get Access Token
+// @route   POST /api/v1/user/refreshToken
+// @access  Public (anything can hit it)
+// to get access token
+// refresh token is set in cookie
+// in every refresh of the page
+// a call is made to get the access token
+// so that the access token can be used
+// to access protected routes
+const getAccessToken = async (req, res) => {
+  try {
+    // accesssing refresh token from cookie
+    const refreshToken = req.cookies.refreshtoken;
+
+    // if there is no refresh token
+    if (!refreshToken)
+      return res.status(400).json({ msg: "Please login now!" });
+
+    // if there is refresh token
+    // verify the refresh token
+    // user = {id: someValue}
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      if (err) return res.status(400).json({ msg: "Please login now!" });
+
+      // create access token
+      const accessToken = createAccessToken({ id: user.id });
+
+      // Sending access token as response
+      res.json({ accessToken });
+    });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
 };
 
 // @desc  logout user / clear cookie
-// @route POST api/v1/user/logout
+// @route get api/v1/user/logout
 // @access PRIVATE
 
-const logout = (req, res) => {
-  res.json({ message: "User logged out" });
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("refreshtoken", { path: "/api/v1/user/refreshToken" });
+    return res.json({ msg: "Logged out!" });
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
 };
-
 // @desc  get user profile
 // @route GET api/v1/user/userProfile
 // @access PRIVATE
@@ -209,8 +255,14 @@ const updatePassword = async (req, res) => {
 // expires in 15m
 
 const createAccessToken = (payload) => {
-  return jwt.sign(payload, "12345", {
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "15m",
+  });
+};
+
+const createRefreshToken = (payload) => {
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
   });
 };
 
@@ -221,6 +273,7 @@ export {
   getAllUserInfo,
   getUserProfile,
   logout,
+  getAccessToken,
   resetPassword,
   updatePassword,
 };

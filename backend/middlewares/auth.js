@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       // verifying the token
-      jwt.verify(token, "12345", (error, user) => {
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
         if (error)
           return res.status(400).json({ msg: "Invalid Authentication." });
 
