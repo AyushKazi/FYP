@@ -22,7 +22,7 @@ router.post("/refreshToken", getAccessToken);
 router.post("/forgotPassword", forgotPassword);
 
 // private user routes
-router.get("/getUserProfile", auth, getUserProfile);
+router.get("/profile", auth, getUserProfile);
 router.get("/logout", logout);
 router.put("/updatePassword", auth, updatePassword);
 router.post("/resetPassword", auth, resetPassword);

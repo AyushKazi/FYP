@@ -1,3 +1,7 @@
+import db from "../models/index.js";
+
+const User = db.user;
+
 const authAdmin = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { user_id: req.user.id } });

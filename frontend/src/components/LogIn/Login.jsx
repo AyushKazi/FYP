@@ -1,8 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { authUser } from "../../features/authUser/authUser-action";
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     reset,
@@ -10,12 +14,25 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { userInfo, isAuthenticated } = useSelector((state) => state.authUser);
+
+  //after succesfull authentication and user info
+
+  useEffect(() => {
+    if (userInfo) {
+      if (userInfo.isAdmin) {
+        navigate("/cart");
+      }
+      navigate("/");
+    }
+  });
+
   const onSubmit = (data) => {
     console.log(data);
     alert(JSON.stringify(data));
+    dispatch(authUser(data));
     reset();
   };
-
   return (
     <>
       <div className="flex  justify-center items-center my-24 h-[-100px] ">

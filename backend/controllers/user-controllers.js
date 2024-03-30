@@ -85,7 +85,7 @@ const loginUser = async (req, res) => {
   if (userWithEmail.role === 1) {
     return res.json({ message: "Welcome to admin panel" });
   }
-
+  console.log(res.cookie);
   //message after succesfull login
   res.json({ message: "Welcome back! Login successful", refreshToken });
 };
@@ -103,7 +103,7 @@ const getAccessToken = async (req, res) => {
   try {
     // accesssing refresh token from cookie
     const refreshToken = req.cookies.refreshtoken;
-
+    console.log(refreshToken);
     // if there is no refresh token
     if (!refreshToken)
       return res.status(400).json({ msg: "Please login now!" });

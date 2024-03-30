@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Login } from "./components/LogIn/Login";
 import SignUp from "./components/LogIn/SignUp";
@@ -8,6 +8,9 @@ import Products from "./routes/Products";
 import ProductDetailPage from "./routes/ProductDetailPage";
 import CartPage from "./routes/CartPage";
 import Checkout from "./routes/Checkout";
+import { useDispatch, useSelector } from "react-redux";
+import { getToken } from "./features/token/token-actions";
+import { fetchAuthUser } from "./features/authUser/authUser-action";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,33 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  const { token } = useSelector((state) => state.token);
+
+  const { isAuthenticated, userInfo } = useSelector((state) => state.authUser);
+
+  // when isAuthenticated is changed
+  // i.e. login status is changed
+  useEffect(() => {
+    // When the app loads if there is no firstLogin
+    // It is not possible to get the access token
+    // And without access token it is not possible to get user info
+    const firstLogin = localStorage.getItem("firstLogin");
+
+    if (firstLogin && !userInfo) {
+      // To get Access token
+      dispatch(getToken());
+    }
+  }, [isAuthenticated, dispatch, userInfo]);
+
+  useEffect(() => {
+    // if token is present
+    if (token && !userInfo) {
+      dispatch(fetchAuthUser(token));
+    }
+  }, [token, dispatch, userInfo]);
+
   return <RouterProvider router={router} />;
 };
 
