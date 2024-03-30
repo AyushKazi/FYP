@@ -1,13 +1,14 @@
 import bycrypt from "bcryptjs";
-import User from "../models/user-model.js";
 import jwt from "jsonwebtoken";
+import db from "../models/index.js";
 
+const User = db.user;
 // @desc  add new user
 // @route POST api/v1/user/register
 // @access Public
 
 const registerUser = async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { firstName, lastName, email, password, contact, role } = req.body;
 
   //checking if the user is already in the database.
   const alreadyUser = await User.findOne({ where: { email } }).catch(
@@ -23,10 +24,11 @@ const registerUser = async (req, res) => {
 
   const hashPassword = bycrypt.hashSync(password, 10);
   const newUser = new User({
-    firstName: firstName,
-    lastName: lastName,
+    first_name: firstName,
+    last_name: lastName,
     email: email,
     password: hashPassword,
+    contact_number: contact,
     role: role,
   });
   //saving the new user in the database

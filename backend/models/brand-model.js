@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db";
+import { sequelize } from "../config/db.js";
 
-const Brand = sequelize.define("Brand", {
+const Brand = sequelize.define("brand", {
   brand_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

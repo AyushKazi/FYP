@@ -29,6 +29,8 @@ const User = sequelize.define("user", {
   role: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
+    // 0 is normal user
+    // 1 is admin
   },
 });
 

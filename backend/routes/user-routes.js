@@ -25,5 +25,5 @@ router.put("/updatePassword", auth, updatePassword);
 router.post("/resetPassword", auth, resetPassword);
 
 //admin routes
-router.get("/getAllUserInfo", getAllUserInfo);
+router.get("/getAllUserInfo", auth, getAllUserInfo);
 export default router;

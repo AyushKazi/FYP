@@ -17,8 +17,8 @@ export const sequelize = new Sequelize("electro", "root", "", {
 //   }
 // };
 
-export const db = () => {
-  sequelize
+export const db = async () => {
+  await sequelize
     .authenticate()
     .then(() => {
       console.log("Database Connection Successful!");
@@ -28,12 +28,12 @@ export const db = () => {
     });
 };
 
-//making table
-// sequelize
-//   .sync()
-//   .then(() => {
-//     console.log("Tables synchronized successfully!");
-//   })
-//   .catch((error) => {
-//     console.error("Error synchronizing tables:", error);
-//   });
+// making table
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Tables synchronized successfully!");
+  })
+  .catch((error) => {
+    console.error("Error synchronizing tables:", error);
+  });
