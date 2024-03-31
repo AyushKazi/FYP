@@ -85,7 +85,6 @@ const loginUser = async (req, res) => {
   if (userWithEmail.role === 1) {
     return res.json({ message: "Welcome to admin panel" });
   }
-  console.log(res.cookie);
   //message after succesfull login
   res.json({ message: "Welcome back! Login successful", refreshToken });
 };
@@ -103,7 +102,6 @@ const getAccessToken = async (req, res) => {
   try {
     // accesssing refresh token from cookie
     const refreshToken = req.cookies.refreshtoken;
-    console.log(refreshToken);
     // if there is no refresh token
     if (!refreshToken)
       return res.status(400).json({ msg: "Please login now!" });
@@ -143,9 +141,20 @@ const logout = async (req, res) => {
 // @route GET api/v1/user/userProfile
 // @access PRIVATE
 
-const getUserProfile = (req, res) => {
+const getUserProfile = async (req, res) => {
   //displays the user profile according to the token with whom it is attached
-  res.json({ user: req.user });
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
 };
 
 // @desc  get all users info

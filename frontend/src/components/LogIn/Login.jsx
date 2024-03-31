@@ -17,15 +17,18 @@ export const Login = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.authUser);
 
   //after succesfull authentication and user info
-
   useEffect(() => {
+    console.log("UserInfo: ", userInfo);
     if (userInfo) {
       if (userInfo.isAdmin) {
+        console.log("Navigating to /cart");
         navigate("/cart");
+      } else {
+        console.log("Navigating to /");
+        navigate("/");
       }
-      navigate("/");
     }
-  });
+  }, [userInfo]);
 
   const onSubmit = (data) => {
     console.log(data);

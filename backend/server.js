@@ -16,11 +16,14 @@ dotenv.config();
 db();
 
 //decodes the url
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.get("/", (req, res) => {
   res.send("From the FYP server");
 });

@@ -4,6 +4,8 @@ import { setIsAuthenticated, setUserInfo } from "./authUser-slice";
 export const authUser = (loginDetails) => {
   return async (dispatch) => {
     const { email, password } = loginDetails;
+    console.log(email);
+    console.log(password);
 
     try {
       // dispatch(userAuthRequest)
@@ -23,6 +25,7 @@ export const authUser = (loginDetails) => {
       const { data } = await axios.post(
         "http://localhost:3001/api/v1/user/login",
         { email, password },
+        { withCredentials: true },
         config
       );
 
@@ -40,9 +43,14 @@ export const authUser = (loginDetails) => {
 // called after getting the token from cookie
 export const fetchAuthUser = (token) => {
   return async (dispatch) => {
-    const response = await axios.get("/api/v1/user/info", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get(
+      "http://localhost:3001/api/v1/user/profile",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    console.log(response);
 
     dispatch(
       setUserInfo({
