@@ -15,6 +15,13 @@ import UserProfile from "./routes/UserProfile/UserProfile";
 import Orders from "./routes/UserProfile/Orders";
 import Dashboard from "./routes/UserProfile/Dashboard";
 import PersonalInfo from "./routes/UserProfile/PersonalInfo";
+import AdminView from "./routes/Admin/AdminView";
+import AdminDashboard from "./routes/Admin/AdminDashboard";
+import AdminUsers from "./routes/Admin/AdminUsers";
+import AdminOrders from "./routes/Admin/AdminOrders";
+import AdminProducts from "./routes/Admin/AdminProducts";
+import AdminCategory from "./routes/Admin/AdminCategory";
+import AdminBrand from "./routes/Admin/AdminBrand";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +42,18 @@ const router = createBrowserRouter([
           { path: "dashboard", element: <Dashboard />, index: true },
           { path: "orders", element: <Orders /> },
           { path: "personalInfo", element: <PersonalInfo /> },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <AdminView />,
+        children: [
+          { path: "dashboard", element: <AdminDashboard />, index: true },
+          { path: "orders", element: <AdminOrders /> },
+          { path: "users", element: <AdminUsers /> },
+          { path: "products", element: <AdminProducts /> },
+          { path: "category", element: <AdminCategory /> },
+          { path: "brands", element: <AdminBrand /> },
         ],
       },
     ],

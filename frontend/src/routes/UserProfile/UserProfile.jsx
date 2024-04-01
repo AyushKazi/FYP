@@ -13,33 +13,33 @@ const UserProfile = () => {
         My ElectroHub Account
       </div>
       <div className="my-14 mx-20 grid grid-cols-3  gap-4">
-        <div className="flex flex-col gap-6 py-6 text-left  uppercase font-medium border border-black rounded-md">
+        <div className="flex flex-col gap-6 py-6 text-left  uppercase font-medium border-2 border-[#D9D9D9]  rounded-md">
           <Link
             to="/userProfile/dashboard"
-            className=" py-2 px-4 hover:bg-[#D9D9D9] duration-300"
+            className=" py-2 px-10 hover:bg-[#D9D9D9] duration-300"
           >
             Dashboard
           </Link>
           <Link
             to="/userProfile/orders"
-            className="py-2 px-4 hover:bg-[#D9D9D9] duration-300"
+            className="py-2 px-10 hover:bg-[#D9D9D9] duration-300"
           >
             Orders
           </Link>
           <Link
             to="/userProfile/personalInfo"
-            className="py-2 px-4 hover:bg-[#D9D9D9] duration-300"
+            className="py-2 px-10 hover:bg-[#D9D9D9] duration-300"
           >
             Personal Info
           </Link>
           <div
-            className="py-2 px-4 hover:bg-[#D9D9D9] duration-300"
+            className="py-2 px-10 hover:bg-[#D9D9D9] duration-300 cursor-pointer"
             onClick={() => dispatch(logout())}
           >
             LogOut
           </div>
         </div>
-        <div className=" col-span-2 border border-black rounded-sm">
+        <div className=" col-span-2 border-2 border-[#D9D9D9]  rounded-sm">
           <Outlet />
         </div>
       </div>

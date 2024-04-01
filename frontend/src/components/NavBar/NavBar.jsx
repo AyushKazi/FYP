@@ -62,89 +62,89 @@ const NavBar = () => {
               <PiShoppingCartFill className=" size-6" />
             </Link>
 
-            <Link to="/signup">
+            <Link to="/login">
               <PiUserBold className="mx-2 size-5 md:hidden" />
             </Link>
 
             {isAuthenticated && (
-              <div>
-                <Link
-                  onClick={toggleDropdown}
-                  className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500"
-                >
+              <div className="relative group">
+                {" "}
+                {/* Parent container as hover target */}
+                <button className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500">
                   My Account
-                </Link>
-
-                {isDropdownOpen && (
-                  <div className="dropdown-menu bg-[#2C2C2C] text-white rounded-sm py-1 mt-1">
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      onClick={() => dispatch(logout())}
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
+                </button>
+                <div className="dropdown-menu absolute w-24 right-0 mt-1 bg-[#2C2C2C] text-white rounded-md py-1 z-50 hidden group-hover:block">
+                  {" "}
+                  {/* Use group-hover to show on hover */}
+                  <Link
+                    to="/userProfile/dashboard"
+                    className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => dispatch(logout())}
+                    className="block  px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
             )}
 
             {userInfo && userInfo.isAdmin && (
-              <div>
-                <Link
-                  onClick={toggleDropdownAdmin}
+              <div className="relative inline-block text-left group">
+                {" "}
+                {/* Add group class */}
+                <button
+                  onMouseEnter={() => setIsDropdownOpenAdmin(true)} // Consider removing if click is preferred
+                  onMouseLeave={() => setIsDropdownOpenAdmin(false)} // Consider removing if click is preferred
                   className="sign hidden text-sm font-medium md:block px-4 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500"
                 >
                   Admin
-                </Link>
-
-                {isDropdownOpenAdmin && (
-                  <div className="dropdown-menu bg-[#2C2C2C] text-white rounded-sm py-1 mt-1">
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Users
-                    </Link>
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Products
-                    </Link>
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Category
-                    </Link>
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Brand
-                    </Link>
-                    <Link
-                      to="/userProfile/dashboard"
-                      className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                    >
-                      Orders
-                    </Link>
-                  </div>
-                )}
+                </button>
+                {/* Conditionally rendering removed, using hidden and group-hover:block for visibility control */}
+                <div className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
+                  <Link
+                    to="/admin/dashboard"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/admin/users"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Users
+                  </Link>
+                  <Link
+                    to="/admin/products"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Products
+                  </Link>
+                  <Link
+                    to="/admin/category"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Category
+                  </Link>
+                  <Link
+                    to="/admin/brands"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Brand
+                  </Link>
+                  <Link
+                    to="/admin/orders"
+                    className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Orders
+                  </Link>
+                </div>
               </div>
             )}
+
             {!isAuthenticated && (
               <Link
                 to="/login"

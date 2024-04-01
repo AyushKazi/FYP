@@ -22,7 +22,7 @@ export const Login = () => {
     if (userInfo) {
       if (userInfo.isAdmin) {
         console.log("Navigating to /cart");
-        navigate("/cart");
+        navigate("/admin/dashboard");
       } else {
         console.log("Navigating to /");
         navigate("/");
