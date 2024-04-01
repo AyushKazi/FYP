@@ -62,3 +62,15 @@ export const fetchAuthUser = (token) => {
     dispatch(setIsAuthenticated(true));
   };
 };
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await axios.get("http://localhost:3001/api/v1/user/logout");
+      localStorage.removeItem("firstLogin");
+      window.location.href = "/";
+    } catch (err) {
+      window.location.href = "/";
+    }
+  };
+};

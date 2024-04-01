@@ -11,6 +11,10 @@ import Checkout from "./routes/Checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "./features/token/token-actions";
 import { fetchAuthUser } from "./features/authUser/authUser-action";
+import UserProfile from "./routes/UserProfile/UserProfile";
+import Orders from "./routes/UserProfile/Orders";
+import Dashboard from "./routes/UserProfile/Dashboard";
+import PersonalInfo from "./routes/UserProfile/PersonalInfo";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +28,15 @@ const router = createBrowserRouter([
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/checkout", element: <Checkout /> },
+      {
+        path: "/userProfile",
+        element: <UserProfile />,
+        children: [
+          { path: "dashboard", element: <Dashboard />, index: true },
+          { path: "orders", element: <Orders /> },
+          { path: "personalInfo", element: <PersonalInfo /> },
+        ],
+      },
     ],
   },
 ]);
