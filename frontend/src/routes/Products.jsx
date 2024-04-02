@@ -28,7 +28,7 @@ const Products = () => {
         {/* featured products */}
         <div className="flex flex-wrap justify-evenly  px-4 ">
           {products.map((product) => (
-            <ProductCard product={product} key={product._id} />
+            <ProductCard product={product} key={product.product_id} />
           ))}
         </div>
         {/* end of featured products */}

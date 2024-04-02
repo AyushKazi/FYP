@@ -1,9 +1,9 @@
 import React from "react";
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
-import { removeProduct } from "../../features/cart-slice";
+// import { removeProduct } from "../../features/cart-slice";
 
-export const CartCard = ({ product }) => {
+export const CartCard = ({ item }) => {
   const dispatch = useDispatch();
   return (
     <>
@@ -12,25 +12,25 @@ export const CartCard = ({ product }) => {
         <div className="1 flex justify-center  ">
           <div className="image md:w-52 md:max-h-48  rounded-md overflow-hidden border border-blue-">
             <img
-              src="https://images.pexels.com/photos/50614/pexels-photo-50614.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              src={item.image}
               alt=""
               className="w-full h-full object-cover"
             />
           </div>
         </div>
 
-        {/* div grid 2 for product details */}
+        {/* div grid 2 for item details */}
         <div className="2  w-full  md:ml-4  ">
           {/* now flex this div as col */}
           <div className="details mt-4 md:mt-0  h-full flex flex-col justify-between gap-4  ">
             {/* flex this name and button div */}
             <div className="nameAndButton flex justify-between  space-y-2   ">
               <div className="name text-xl md:text-2xl font-light text-neutral-900 ">
-                {product.name}
+                {item.name}
               </div>
               <div
                 onClick={() => {
-                  dispatch(removeProduct({ productId: product._id }));
+                  dispatch(removeProduct({ productId: item.product_id }));
                 }}
                 className="delButton ml-4 text-red-700 hover:text-xl hover:duration-200 font-medium"
               >
@@ -40,7 +40,9 @@ export const CartCard = ({ product }) => {
 
             {/* flex this price and qunatity div */}
             <div className="priceAndQuantity flex justify-between items-center my-2   w-full ">
-              <div className="price text-xl md:text-2xl ">NPR 50000 /-</div>
+              <div className="price text-xl md:text-2xl ">
+                NPR {item.price} /-
+              </div>
 
               {/* quantiry button */}
               <div className="flex items-center border-gray-100">
@@ -51,7 +53,7 @@ export const CartCard = ({ product }) => {
                 <input
                   className="h-8 w-8 border bg-white text-center text-xs outline-none"
                   type="number"
-                  value="2"
+                  value={item.qty}
                   min="1"
                   disabled
                 />

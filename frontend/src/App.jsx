@@ -22,6 +22,7 @@ import AdminOrders from "./routes/Admin/AdminOrders";
 import AdminProducts from "./routes/Admin/AdminProducts";
 import AdminCategory from "./routes/Admin/AdminCategory";
 import AdminBrand from "./routes/Admin/AdminBrand";
+import { fetchCartData } from "./features/cart/cart-action";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,11 @@ const App = () => {
       dispatch(fetchAuthUser(token));
     }
   }, [token, dispatch, userInfo]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchCartData());
+    }
+  }, [isAuthenticated, dispatch]);
 
   return <RouterProvider router={router} />;
 };

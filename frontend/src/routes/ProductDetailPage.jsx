@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Rating from "../components/Product/Rating";
 import ProductCard from "../components/Product/ProductCard";
 import { FaCaretDown } from "react-icons/fa";
+import products from "../data/product";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cart/cart-action";
 const ProductDetailPage = () => {
+  const dispatch = useDispatch();
+  const [qty, setQty] = useState(1);
   const { id: productID } = useParams();
+  const product = products.find((p) => p.product_id === productID);
+
+  const { product_id, name, image, price, countInStock } = product;
+
+  //qty add
+  const handlePlusButton = () => {
+    setQty(qty + 1);
+  };
+
+  //qty deduct
+  const handleMinusButton = () => {
+    setQty(qty - 1);
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ product_id, name, image, price, countInStock, qty }));
+  };
+
   return (
     <>
       <div className="main max-w-screen-xl mx-3 my-3 md:mx-5 md:my-5 xl:mx-auto lg:mx-7 ">
@@ -18,7 +41,7 @@ const ProductDetailPage = () => {
           {/* image grid 1 */}
           <div className="image ">
             <img
-              src="https://images.pexels.com/photos/50614/pexels-photo-50614.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              src={product.image}
               alt=""
               className="w-full h-full rounded-md "
             />
@@ -28,7 +51,7 @@ const ProductDetailPage = () => {
           <div className="details space-y-3  lg:space-y-6 mt-3 md:mt-0 px-2 md:mx-4 lg:mx-6 relative">
             {/* title */}
             <div className="title font-semibold text-3xl lg:text-4xl ">
-              Samsung Galaxy Edge 7
+              {product.name}
             </div>
 
             <hr className="border border-neutral-200" />
@@ -38,7 +61,7 @@ const ProductDetailPage = () => {
               <div className="category  text-xs ">
                 Category :{" "}
                 <span className="px-2 py-1 rounded-xl bg-[#D9D9D9]">
-                  Mobile
+                  {product.category}
                 </span>
               </div>
 
@@ -46,44 +69,57 @@ const ProductDetailPage = () => {
               <div className="brand text-xs ">
                 Brand :{" "}
                 <span className="px-2 py-1 rounded-xl bg-[#D9D9D9]">
-                  Samsung
+                  {product.brand}
                 </span>
               </div>
             </div>
             {/* rating */}
-            <div className="rating   ">
-              <Rating value={3} />
+            <div className="rating ">
+              <Rating
+                value={product.rating}
+                text={`${product.numReviews} reviews`}
+              />
             </div>
             {/* price */}
             <div className="price text-3xl  lg:text-4xl font-light">
-              NPR. 50000 /-
+              NPR. {product.price} /-
             </div>
             <hr className="border border-neutral-200" />
 
             {/* div for after md breakpoint to align items stick to bottom */}
             <div className="space-y-3 lg:space-y-4  flex flex-col lg:absolute bottom-0  lg:w-1/2">
               {/* stock */}
-              <div className="text-sm">In Stock : 2</div>
+              <div className="text-sm">In Stock : {product.countInStock}</div>
               {/* quantity */}
               <div className="flex items-center border-gray-100">
-                <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-neutral-500 hover:text-neutral-50">
+                <span
+                  onClick={handleMinusButton}
+                  className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-neutral-500 hover:text-neutral-50"
+                >
                   {" "}
                   -{" "}
                 </span>
                 <input
                   className="h-8 w-8 border bg-white text-center text-xs outline-none"
                   type="number"
-                  value="2"
+                  disabled
+                  value={qty}
                   min="1"
                 />
-                <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-neutral-500 hover:text-neutral-50">
+                <span
+                  onClick={handlePlusButton}
+                  className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-neutral-500 hover:text-neutral-50"
+                >
                   {" "}
                   +{" "}
                 </span>
               </div>
               {/* cart button */}
               <div className="button">
-                <button className="w-full md:w-full py-2  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
+                <button
+                  onClick={addToCartHandler}
+                  className="w-full md:w-full py-2  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300"
+                >
                   Add to Cart
                 </button>
               </div>
@@ -100,17 +136,7 @@ const ProductDetailPage = () => {
             </button>
           </div>
           <div className="description border rounded-b-md text-xs lg:text-sm  px-4 lg:px-6 py-2 text-justify">
-            This is very good mobile with good hello specs please do not break
-            it. This is very good mobile with good specs okay please do not
-            break it. This is very good mobile with good hello specs please do
-            not break it. This is very good mobile it is alrightwith good specs
-            please do not break it. This is very good not good mobile with good
-            specs please do not break it. This is very good mobile with good
-            hello specs please do not break it. This is very good mobile with
-            good specs okay please do not break it. This is very good mobile
-            with good hello specs please do not break it. This is very good
-            mobile it is alrightwith good specs please do not break it. This is
-            very good not good mobile with good specs please do not break it.
+            {product.description}
           </div>
         </div>
         {/* end of product description */}

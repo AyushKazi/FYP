@@ -66,32 +66,6 @@ const NavBar = () => {
               <PiUserBold className="mx-2 size-5 md:hidden" />
             </Link>
 
-            {isAuthenticated && (
-              <div className="relative group">
-                {" "}
-                {/* Parent container as hover target */}
-                <button className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500">
-                  My Account
-                </button>
-                <div className="dropdown-menu absolute w-24 right-0 mt-1 bg-[#2C2C2C] text-white rounded-md py-1 z-50 hidden group-hover:block">
-                  {" "}
-                  {/* Use group-hover to show on hover */}
-                  <Link
-                    to="/userProfile/dashboard"
-                    className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    onClick={() => dispatch(logout())}
-                    className="block  px-4 py-2 text-sm hover:bg-white hover:text-black"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            )}
-
             {userInfo && userInfo.isAdmin && (
               <div className="relative inline-block text-left group">
                 {" "}
@@ -99,12 +73,12 @@ const NavBar = () => {
                 <button
                   onMouseEnter={() => setIsDropdownOpenAdmin(true)} // Consider removing if click is preferred
                   onMouseLeave={() => setIsDropdownOpenAdmin(false)} // Consider removing if click is preferred
-                  className="sign hidden text-sm font-medium md:block px-4 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500"
+                  className="sign hidden text-sm font-medium md:block px-6 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500"
                 >
                   Admin
                 </button>
                 {/* Conditionally rendering removed, using hidden and group-hover:block for visibility control */}
-                <div className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
+                <div className="origin-top-right absolute right-0 mt-1 w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
                   <Link
                     to="/admin/dashboard"
                     className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
@@ -141,6 +115,32 @@ const NavBar = () => {
                   >
                     Orders
                   </Link>
+                </div>
+              </div>
+            )}
+
+            {isAuthenticated && (
+              <div className="relative group">
+                {" "}
+                {/* Parent container as hover target */}
+                <button className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500">
+                  My Account
+                </button>
+                <div className="dropdown-menu absolute w-24 right-0 mt-1 bg-[#2C2C2C] text-white rounded-md py-1 z-50 hidden group-hover:block">
+                  {" "}
+                  {/* Use group-hover to show on hover */}
+                  <Link
+                    to="/userProfile/dashboard"
+                    className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => dispatch(logout())}
+                    className="block  px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Logout
+                  </button>
                 </div>
               </div>
             )}
