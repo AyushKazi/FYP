@@ -1,10 +1,15 @@
 import React from "react";
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
+import { removeFromCart } from "../../features/cart/cart-action";
 // import { removeProduct } from "../../features/cart-slice";
 
 export const CartCard = ({ item }) => {
   const dispatch = useDispatch();
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
   return (
     <>
       <div className="cartdetails main flex flex-col md:flex-row justify-start lg:w-11/12  bg-neutral-200 p-6 rounded-lg border-x-2 border-neutral-800 drop-shadow-lg  mb-8 lg:mr-4  hover:translate-y-1 hover:ease-linear hover:duration-300">
@@ -24,14 +29,12 @@ export const CartCard = ({ item }) => {
           {/* now flex this div as col */}
           <div className="details mt-4 md:mt-0  h-full flex flex-col justify-between gap-4  ">
             {/* flex this name and button div */}
-            <div className="nameAndButton flex justify-between  space-y-2   ">
+            <div className="nameAndButton flex justify-between space-y-2   ">
               <div className="name text-xl md:text-2xl font-light text-neutral-900 ">
                 {item.name}
               </div>
               <div
-                onClick={() => {
-                  dispatch(removeProduct({ productId: item.product_id }));
-                }}
+                onClick={() => removeFromCartHandler(item.product_id)}
                 className="delButton ml-4 text-red-700 hover:text-xl hover:duration-200 font-medium"
               >
                 <ImBin />
@@ -39,9 +42,18 @@ export const CartCard = ({ item }) => {
             </div>
 
             {/* flex this price and qunatity div */}
-            <div className="priceAndQuantity flex justify-between items-center my-2   w-full ">
-              <div className="price text-xl md:text-2xl ">
-                NPR {item.price} /-
+            <div className="priceAndQuantity flex justify-between items-center my-2  w-full ">
+              <div>
+                <div className="price md:text-lg  mb-4">
+                  NPR {item.price} /-
+                </div>
+                <div className="price flex items-center  gap-2">
+                  Subtotal :
+                  <p className="text-xl md:text-2xl">
+                    {" "}
+                    NPR {item.price * item.qty} /-
+                  </p>
+                </div>
               </div>
 
               {/* quantiry button */}

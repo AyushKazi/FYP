@@ -11,15 +11,16 @@ import { logout } from "../../features/authUser/authUser-action";
 
 const NavBar = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.authUser);
+  const { totalQuantity } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpenAdmin, setIsDropdownOpenAdmin] = useState(false);
 
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const toggleDropdownAdmin = () =>
-    setIsDropdownOpenAdmin(!isDropdownOpenAdmin);
+  // const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  // const toggleDropdownAdmin = () =>
+  //   setIsDropdownOpenAdmin(!isDropdownOpenAdmin);
 
   return (
     <>
@@ -58,8 +59,13 @@ const NavBar = () => {
           {/* buttons */}
 
           <div className="right flex items-center  mx-4 space-x-3  ">
-            <Link to="/cart">
-              <PiShoppingCartFill className=" size-6" />
+            <Link to="/cart" className="flex relative">
+              <PiShoppingCartFill className="size-6 " />
+              {totalQuantity > 0 && (
+                <span className="flex items-center justify-center absolute -top-2 -right-2 h-4 w-4 bg-red-500 text-white text-xs rounded-full">
+                  {totalQuantity}
+                </span>
+              )}{" "}
             </Link>
 
             <Link to="/login">

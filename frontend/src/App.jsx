@@ -23,6 +23,8 @@ import AdminProducts from "./routes/Admin/AdminProducts";
 import AdminCategory from "./routes/Admin/AdminCategory";
 import AdminBrand from "./routes/Admin/AdminBrand";
 import { fetchCartData } from "./features/cart/cart-action";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -94,7 +96,11 @@ const App = () => {
     }
   }, [isAuthenticated, dispatch]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;

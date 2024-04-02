@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { addItemToCart, removeItemFromCart, replaceCart } from "./cart-slice";
 import localForage from "localforage";
 
@@ -6,6 +7,16 @@ export const addToCart = (item) => async (dispatch, getState) => {
 
   // localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
   await localForage.setItem("cartItems", getState().cart.cartItems);
+
+  toast.success("Added to cart successfully!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   // dispatch(updateSuccessMessage("Product added to cart successfully!"));
 };
