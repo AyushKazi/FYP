@@ -1,6 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../../features/userRegister/userRegister-actions";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const {
@@ -12,9 +15,30 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  // registration screen state values
+  const { isLoading, error, successMessage } = useSelector(
+    (state) => state.userRegister
+  );
+
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
+    dispatch(registerUser(data));
     reset();
+
+    toast.success("Registration Successful!", {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    navigate("/login");
   };
 
   return (
