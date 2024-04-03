@@ -3,6 +3,7 @@ import ProductCard from "../components/Product/ProductCard";
 import Banner from "../components/Product/Banner";
 import CategoryCard from "../components/Category/CategoryCard";
 import products from "../data/product";
+import { categories } from "../data/category";
 
 const Products = () => {
   return (
@@ -42,11 +43,9 @@ const Products = () => {
 
         {/* category list */}
         <div className=" flex flex-wrap justify-evenly  px-4 py-2 ">
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
+          {categories.map((category) => (
+            <CategoryCard category={category} key={category.cat_id} />
+          ))}
         </div>
       </div>
     </>

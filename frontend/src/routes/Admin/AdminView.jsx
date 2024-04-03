@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const AdminView = () => {
   return (
@@ -7,46 +7,71 @@ const AdminView = () => {
       <div className="bg-[#2C2C2C] text-white flex justify-center py-10 font-light  text-2xl  ">
         Welcome Admin !
       </div>
-      <div className="my-10 mx-20 flex flex-col gap-10  ">
-        <div className="flex justify-center  bg-[#D9D9D9]  gap-6 py-6 text-left  uppercase font-medium  max-w-screen-2xl  rounded-md">
-          <Link
+      <div className="my-10 mx-20 flex flex-col gap-10">
+        <div className="flex justify-center bg-[#D9D9D9] gap-6 py-6 text-left uppercase font-medium max-w-screen-2xl rounded-md">
+          {/* Use NavLink for navigation links with active styling */}
+          <NavLink
             to="/admin/dashboard"
-            className=" py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Dashboard
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/admin/orders"
-            className="py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Orders
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/admin/products"
-            className="py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Products
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/admin/category"
-            className="py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Category
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/admin/brands"
-            className="py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Brand
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/admin/users"
-            className="py-2 px-4 hover:bg-white duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 px-4 bg-white"
+                : "py-2 px-4 hover:bg-white duration-300"
+            }
           >
             Users
-          </Link>
+          </NavLink>
         </div>
-        <div className=" rounded-sm  ">
+        <div className="rounded-sm">
           <Outlet />
         </div>
       </div>

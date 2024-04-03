@@ -59,36 +59,36 @@ const products = [
     rating: 5,
     numReviews: 12,
   },
-  {
-    product_id: "5",
-    name: "Logitech G-Series Gaming Mouse",
-    image:
-      "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description:
-      "Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience",
-    brand: "Logitech",
-    category: "Electronics",
-    featured: true,
-    price: 4000,
-    countInStock: 7,
-    rating: 3.5,
-    numReviews: 10,
-  },
-  {
-    product_id: "6",
-    name: "Amazon Echo Dot 3rd Generation",
-    image:
-      "https://images.pexels.com/photos/15945021/pexels-photo-15945021/free-photo-of-camera-on-white-background.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description:
-      "Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
-    brand: "Amazon",
-    category: "Electronics",
-    price: 20000,
-    countInStock: 0,
-    featured: true,
-    rating: 4,
-    numReviews: 12,
-  },
+  // {
+  //   product_id: "5",
+  //   name: "Logitech G-Series Gaming Mouse",
+  //   image:
+  //     "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  //   description:
+  //     "Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience",
+  //   brand: "Logitech",
+  //   category: "Electronics",
+  //   featured: true,
+  //   price: 4000,
+  //   countInStock: 7,
+  //   rating: 3.5,
+  //   numReviews: 10,
+  // },
+  // {
+  //   product_id: "6",
+  //   name: "Amazon Echo Dot 3rd Generation",
+  //   image:
+  //     "https://images.pexels.com/photos/15945021/pexels-photo-15945021/free-photo-of-camera-on-white-background.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  //   description:
+  //     "Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
+  //   brand: "Amazon",
+  //   category: "Electronics",
+  //   price: 20000,
+  //   countInStock: 0,
+  //   featured: true,
+  //   rating: 4,
+  //   numReviews: 12,
+  // },
 ];
 
 export default products;
