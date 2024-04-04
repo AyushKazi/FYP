@@ -18,6 +18,11 @@ const ShippingAddress = sequelize.define("shipping_address", {
     allowNull: false,
   },
 
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
   contact_number: {
     type: DataTypes.STRING(20),
     allowNull: false,

@@ -25,6 +25,7 @@ import AdminBrand from "./routes/Admin/AdminBrand";
 import { fetchCartData } from "./features/cart/cart-action";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Payment from "./routes/Payment";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/checkout", element: <Checkout /> },
+      { path: "/payment", element: <Payment /> },
       {
         path: "/userProfile",
         element: <UserProfile />,
