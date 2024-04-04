@@ -24,7 +24,6 @@ const createCategory = async (req, res) => {
 
     const category = {
       name,
-      description,
       imagePath,
     };
 
@@ -79,7 +78,6 @@ const updateCategory = async (req, res) => {
 
     const category = {
       name,
-      description,
       imagePath,
     };
 

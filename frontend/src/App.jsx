@@ -26,6 +26,7 @@ import { fetchCartData } from "./features/cart/cart-action";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Payment from "./routes/Payment";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -38,27 +39,32 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUp /> },
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
-      { path: "/checkout", element: <Checkout /> },
-      { path: "/payment", element: <Payment /> },
       {
-        path: "/userProfile",
-        element: <UserProfile />,
+        element: <ProtectedRoutes />,
         children: [
-          { path: "dashboard", element: <Dashboard />, index: true },
-          { path: "orders", element: <Orders /> },
-          { path: "personalInfo", element: <PersonalInfo /> },
-        ],
-      },
-      {
-        path: "/admin",
-        element: <AdminView />,
-        children: [
-          { path: "dashboard", element: <AdminDashboard />, index: true },
-          { path: "orders", element: <AdminOrders /> },
-          { path: "users", element: <AdminUsers /> },
-          { path: "products", element: <AdminProducts /> },
-          { path: "category", element: <AdminCategory /> },
-          { path: "brands", element: <AdminBrand /> },
+          { path: "/checkout", element: <Checkout /> },
+          { path: "/payment", element: <Payment /> },
+          {
+            path: "/userProfile",
+            element: <UserProfile />,
+            children: [
+              { path: "dashboard", element: <Dashboard />, index: true },
+              { path: "orders", element: <Orders /> },
+              { path: "personalInfo", element: <PersonalInfo /> },
+            ],
+          },
+          {
+            path: "/admin",
+            element: <AdminView />,
+            children: [
+              { path: "dashboard", element: <AdminDashboard />, index: true },
+              { path: "orders", element: <AdminOrders /> },
+              { path: "users", element: <AdminUsers /> },
+              { path: "products", element: <AdminProducts /> },
+              { path: "category", element: <AdminCategory /> },
+              { path: "brands", element: <AdminBrand /> },
+            ],
+          },
         ],
       },
     ],
@@ -92,11 +98,6 @@ const App = () => {
       dispatch(fetchAuthUser(token));
     }
   }, [token, dispatch, userInfo]);
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchCartData());
-    }
-  }, [isAuthenticated, dispatch]);
 
   return (
     <>

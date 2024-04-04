@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { PiUserBold } from "react-icons/pi";
 import { IoIosSearch } from "react-icons/io";
@@ -8,12 +8,18 @@ import Products from "../../routes/Products";
 import CartPage from "../../routes/CartPage";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/authUser/authUser-action";
+import { fetchCartData } from "../../features/cart/cart-action";
 
 const NavBar = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.authUser);
   const { totalQuantity } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchCartData());
+    }
+  }, [isAuthenticated, dispatch]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpenAdmin, setIsDropdownOpenAdmin] = useState(false);
