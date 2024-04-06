@@ -1,4 +1,5 @@
 import db from "../models/index.js";
+import { sequelize } from "../config/db.js";
 
 const Product = db.product;
 const Category = db.category;
@@ -30,7 +31,7 @@ const findProductById = async (req, res) => {
     where: {
       product_id: productId,
     },
-    attributes: { exclude: ["category_id"] },
+    attributes: { exclude: ["category_id", "brand_id"] },
     include: [
       {
         model: Category,
@@ -94,6 +95,7 @@ const createProduct = async (req, res) => {
     };
 
     const newProduct = await Product.create(product);
+    console.log("db.sequelize", db.sequelize);
 
     // Adding category and brand info
     const createdProduct = await Product.findByPk(newProduct.product_id, {
@@ -109,8 +111,8 @@ const createProduct = async (req, res) => {
         "brand_id", // Include brand_id in the attributes to fetch
         "featured",
         // Assuming db.sequelize.col is correctly set up to access the category name
-        [db.sequelize.col("category.name"), "category_name"],
-        [db.sequelize.col("brand.name"), "brand_name"], // Include brand name similarly
+        [sequelize.col("category.name"), "category_name"],
+        [sequelize.col("brand.name"), "brand_name"], // Include brand name similarly
       ],
       include: [
         {
@@ -170,14 +172,15 @@ const updateProduct = async (req, res) => {
       imagePath,
       countInStock,
       category_id,
+      brand_id,
       featured,
     } = req.body;
 
     const product = await Product.findByPk(req.params.id);
 
     if (!product) {
-      res.status(404);
-      throw new Error("Product could not found!");
+      res.status(404).json({ message: "Product not found" });
+      //   throw new Error("Product could not found!");
     }
 
     if (product) {
@@ -186,6 +189,7 @@ const updateProduct = async (req, res) => {
       product.price = price;
       (product.imagePath = imagePath), (product.countInStock = countInStock);
       product.category_id = category_id;
+      product.brand_id = brand_id;
       product.featured = featured;
     }
 
@@ -202,21 +206,31 @@ const updateProduct = async (req, res) => {
         "countInStock",
         "user_id",
         "category_id",
+        "brand_id",
         "featured",
-        [db.sequelize.col("category.name"), "category_name"],
+        [sequelize.col("category.name"), "category_name"],
+        [sequelize.col("brand.name"), "brand_name"],
       ],
-
-      include: {
-        model: Category,
-        as: "category",
-        attributes: [],
-      },
+      include: [
+        {
+          model: Category,
+          as: "category",
+          attributes: [],
+        },
+        {
+          model: Brand, // Include the Brand model in the query
+          as: "brand", // Make sure the alias matches the one defined in your model associations
+          attributes: [],
+        },
+      ],
     });
 
-    res.json({
-      message: "Product updated successfully",
-      updatedProduct,
-    });
+    res
+      .json({
+        message: "Product updated successfully",
+        updatedProduct,
+      })
+      .status(200);
   } catch (err) {
     res.status(500);
     throw new Error(err.message);

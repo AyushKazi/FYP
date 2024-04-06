@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../components/Product/ProductCard";
 import Banner from "../components/Product/Banner";
 import CategoryCard from "../components/Category/CategoryCard";
 import products from "../data/product";
 import { categories } from "../data/category";
+import { useDispatch, useSelector } from "react-redux";
+import { getFeaturedProductList } from "../features/featuredProducts/product-actions";
 
 const Products = () => {
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.featuredProductList);
+
+  const { products } = productList;
+
+  useEffect(() => {
+    dispatch(getFeaturedProductList());
+  }, [dispatch]);
+
   return (
     <>
       {/* <div className="grid grid-cols-1 lg:grid-cols-3">

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import localForage from "localforage";
 
 import ShippingAddress from "../components/Checkout/ShippingAddress";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import {
   clearShippingAddress,
   saveShippingAddress,
 } from "../features/cart/cart-slice";
+import axios from "axios";
 
 const Checkout = () => {
   const {
@@ -30,7 +32,6 @@ const Checkout = () => {
     alert(JSON.stringify(data));
     console.log(cartItems);
     dispatchRedux(saveShippingAddress(data));
-    reset();
   };
 
   const { token } = useSelector((state) => state.token);
@@ -55,6 +56,7 @@ const Checkout = () => {
           order,
           config
         );
+        console.log(data);
 
         dispatchRedux(clearCartItems());
         dispatchRedux(clearShippingAddress());
@@ -62,7 +64,9 @@ const Checkout = () => {
         await localForage.removeItem("cartItems");
 
         navigate(`/payment/?orderId=${data.order_id}`);
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error);
+      }
     };
     if (shippingAddress && cartItems.length !== 0) {
       createOrder();
