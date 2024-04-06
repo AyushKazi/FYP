@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import ShippingAddress from "../components/Checkout/ShippingAddress";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { saveShippingAddress } from "../features/cart/cart-slice";
+import {
+  clearCartItems,
+  clearShippingAddress,
+  saveShippingAddress,
+} from "../features/cart/cart-slice";
 
 const Checkout = () => {
   const {
@@ -24,10 +28,46 @@ const Checkout = () => {
   );
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
+    console.log(cartItems);
     dispatchRedux(saveShippingAddress(data));
     reset();
-    navigate("/payment");
   };
+
+  const { token } = useSelector((state) => state.token);
+
+  useEffect(() => {
+    const createOrder = async () => {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const order = {
+          orderItems: cartItems,
+          total_amount: total,
+          shippingAddress,
+        };
+        const { data } = await axios.post(
+          "http://localhost:3001/api/v1/orders",
+          order,
+          config
+        );
+
+        dispatchRedux(clearCartItems());
+        dispatchRedux(clearShippingAddress());
+
+        await localForage.removeItem("cartItems");
+
+        navigate(`/payment/?orderId=${data.order_id}`);
+      } catch (error) {}
+    };
+    if (shippingAddress && cartItems.length !== 0) {
+      createOrder();
+    }
+  }, [shippingAddress, cartItems, dispatchRedux, navigate, token, total]);
 
   return (
     <>
@@ -177,7 +217,10 @@ const Checkout = () => {
 
               {cartItems.map((item) => {
                 return (
-                  <div className="shipping grid grid-cols-3 justify-between">
+                  <div
+                    key={item.id}
+                    className="shipping grid grid-cols-3 justify-between"
+                  >
                     <p className=" col-span-2">
                       {item.name} x {item.qty}
                     </p>

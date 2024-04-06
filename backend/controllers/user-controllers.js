@@ -58,7 +58,7 @@ const loginUser = async (req, res) => {
   );
 
   if (!userWithEmail) {
-    return res.json({ message: "User not found" });
+    return res.status(404).json({ message: "User not found" });
   }
 
   //now check the password
@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
   );
 
   if (!isPasswordValid)
-    return res.json({ message: "Email or password is wrong" });
+    return res.status(401).json({ message: "Email or passwprd is wrong." });
 
   const refreshToken = createRefreshToken({ id: userWithEmail.user_id });
 
@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
   //checking if the user is admin
   //default is 0 which is customer and 1 is for admin
   if (userWithEmail.role === 1) {
-    return res.json({ message: "Welcome to admin panel" });
+    return res.json({ message: "Welcome to admin panel", refreshToken });
   }
   //message after succesfull login
   res.json({ message: "Welcome back! Login successful", refreshToken });

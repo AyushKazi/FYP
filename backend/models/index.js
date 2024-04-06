@@ -80,4 +80,13 @@ db.order.belongsToMany(db.product, {
   foreignKey: "order_id",
 });
 
+// Relationship between order and shipping address
+db.shippingAddress.hasOne(db.order, {
+  foreignKey: "shipping_address_id",
+});
+
+db.order.belongsTo(db.shippingAddress, {
+  foreignKey: "shipping_address_id",
+});
+
 export default db;

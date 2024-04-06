@@ -64,6 +64,8 @@ const createOrder = async (req, res) => {
       email,
     } = shippingAddress;
 
+    console.log("Shippin address : ", shippingAddress);
+
     // First create new shipping address
     const newShippingAddress = {
       city,
@@ -122,7 +124,13 @@ const createOrder = async (req, res) => {
 
     res.status(201).json(createdOrder);
   } catch (error) {
-    res.json("error", error);
+    // Log the error or handle it as needed
+    console.error("Order creation failed:", error);
+
+    // Send a proper HTTP response with a status code and error message
+    res
+      .status(500)
+      .json({ message: "Order creation failed. Please try again later." });
   }
 };
 

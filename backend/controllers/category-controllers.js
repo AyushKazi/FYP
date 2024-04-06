@@ -76,20 +76,26 @@ const updateCategory = async (req, res) => {
   try {
     const { name, imagePath } = req.body;
 
-    const category = {
-      name,
-      imagePath,
-    };
+    const category = await Category.findByPk(req.params.id);
+    if (!category) {
+      res.status(404).json({ message: "Category not found" });
+      return;
+    }
 
-    const createdCategory = await Category.create(category);
+    if (category) {
+      category.name = name || category.name;
+      category.imagePath = imagePath || category.imagePath;
+    }
 
-    res.status(201).json({
-      message: "Category created Successfully",
-      createdCategory,
+    const updatedCategory = await category.save();
+
+    res.json({
+      message: "Category updated successfully",
+      updatedCategory,
     });
   } catch (err) {
     res.status(500);
-    throw new Error("Category could not be created at this moment. Try Again!");
+    throw new Error("Category could not be updated at this moment. Try Again!");
   }
 };
 

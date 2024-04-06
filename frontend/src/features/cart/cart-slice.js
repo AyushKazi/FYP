@@ -73,6 +73,11 @@ const cartSlice = createSlice({
       state.totalQuantity = 0;
       state.total = 0;
     },
+
+    clearShippingAddress(state) {
+      state.shippingAddress = null;
+    },
+
     saveShippingAddress(state, action) {
       state.shippingAddress = action.payload;
     },
@@ -90,6 +95,7 @@ export const {
   replaceCart,
   savePaymentMethod,
   clearCartItems,
+  clearShippingAddress,
   saveShippingAddress,
 } = cartSlice.actions;
 
