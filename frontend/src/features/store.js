@@ -5,7 +5,7 @@ import authUserReducer from "./authUser/authUser-slice";
 import tokenReducer from "./token/token-slice";
 import userRegisterReducer from "./userRegister/userRegister-slice";
 import productListReducer from "./featuredProducts/productList-slice";
-
+import categoryListReducer from "./category/categoryList-slice";
 const store = configureStore({
   reducer: {
     //user
@@ -17,6 +17,7 @@ const store = configureStore({
     cart: cartReducer,
 
     //category
+    categoryList: categoryListReducer,
 
     //brand
 

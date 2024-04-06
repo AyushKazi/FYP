@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import ProductCard from "../components/Product/ProductCard";
 import Banner from "../components/Product/Banner";
 import CategoryCard from "../components/Category/CategoryCard";
-import products from "../data/product";
-import { categories } from "../data/category";
+// import products from "../data/product";
+// import { categories } from "../data/category";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeaturedProductList } from "../features/featuredProducts/product-actions";
+import { getCategoryList } from "../features/category/category-actions";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,12 @@ const Products = () => {
 
   const { products } = productList;
 
+  const categoryList = useSelector((state) => state.categoryList);
+
+  const { categories } = categoryList;
   useEffect(() => {
     dispatch(getFeaturedProductList());
+    dispatch(getCategoryList());
   }, [dispatch]);
 
   return (
@@ -56,7 +61,7 @@ const Products = () => {
         {/* category list */}
         <div className=" flex flex-wrap justify-evenly  px-4 py-2 ">
           {categories.map((category) => (
-            <CategoryCard category={category} key={category.cat_id} />
+            <CategoryCard category={category} key={category.category_id} />
           ))}
         </div>
       </div>
