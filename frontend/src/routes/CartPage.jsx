@@ -46,7 +46,7 @@ const CartPage = () => {
                 ))}
               </div>
               {/* subtotal  */}
-              <div className="lg:w-2/5">
+              <div className="lg:w-2/4">
                 <CartSubTotal total={total} />
               </div>
             </div>

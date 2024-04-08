@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "../../features/authUser/authUser-action";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const {
     register,
@@ -20,9 +21,8 @@ export const Login = () => {
   useEffect(() => {
     console.log("UserInfo: ", userInfo);
     if (userInfo) {
-      if (userInfo.isAdmin) {
-        console.log("Navigating to /cart");
-        navigate("/admin/dashboard");
+      if (location.state?.from) {
+        navigate(location.state.from);
       } else {
         console.log("Navigating to /");
         navigate("/");

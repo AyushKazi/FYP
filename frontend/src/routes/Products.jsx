@@ -12,11 +12,9 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.featuredProductList);
-
   const { products } = productList;
 
   const categoryList = useSelector((state) => state.categoryList);
-
   const { categories } = categoryList;
   useEffect(() => {
     dispatch(getFeaturedProductList());

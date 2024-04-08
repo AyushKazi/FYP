@@ -35,8 +35,6 @@ export const fetchCartData = () => {
       ? await localForage.getItem("cartItems")
       : [];
 
-    console.log(cartItemsFromStorage); // Check if the data is as expected.
-
     dispatch(replaceCart(cartItemsFromStorage));
   };
 };

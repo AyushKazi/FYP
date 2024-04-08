@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Rating from "../components/Product/Rating";
-import ProductCard from "../components/Product/ProductCard";
+// import ProductCard from "../components/Product/ProductCard";
 import { FaCaretDown } from "react-icons/fa";
 import products from "../data/product";
 import { useDispatch } from "react-redux";

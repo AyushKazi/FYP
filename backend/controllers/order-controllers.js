@@ -8,8 +8,59 @@ const ShippingAddress = db.shippingAddress;
 // @desc    Get Order by ID
 // @route   GET api/v1/orders/:id
 // @access  Private
-const getOrderByID = (req, res) => {
-  res.json("order by Id");
+const getOrderByID = async (req, res) => {
+  const orderId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    const order = await Order.findOne({
+      where: {
+        order_id: orderId,
+        // If you want to ensure that only the user's orders are fetched,
+        // you can also add user_id in the where clause:
+        // user_id: userId,
+      },
+      attributes: {
+        exclude: ["shipping_address_id"],
+      },
+      include: [
+        {
+          model: Product,
+          attributes: ["product_id"], // Assuming you want to include name and price here
+          through: {
+            attributes: [
+              "orderline_id",
+              "quantity",
+              "line_total",
+              "name",
+              "price",
+            ],
+          },
+        },
+        {
+          model: ShippingAddress,
+        },
+      ],
+    });
+
+    if (!order) {
+      return res.status(404).json({
+        message: `Order with the given Order ID: "${orderId}" not found!`,
+      });
+    }
+
+    if (order.user_id != userId) {
+      return res.status(403).json({
+        message: `The order with the given Order ID: "${orderId}" is not yours!`,
+      });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "An error occurred while fetching the order.",
+    });
+  }
 };
 
 // @desc    Get logged in user orders
