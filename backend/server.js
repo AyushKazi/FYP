@@ -3,6 +3,7 @@ import api from "./routes/index.js";
 import { db } from "./config/db.js";
 import bodyParser from "body-parser";
 import cors from "cors";
+import path from "path";
 
 const PORT = 3001;
 const app = express();
@@ -30,6 +31,10 @@ app.get("/", (req, res) => {
 
 //base url
 app.use("/api/v1", api);
+
+// Upload
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);

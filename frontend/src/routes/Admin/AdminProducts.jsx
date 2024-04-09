@@ -8,6 +8,7 @@ const AdminProducts = () => {
         Welcome to the Dashboard of your Admin account. You can add, view,
         update details of products, users and many more!
       </div>
+      <div></div>
     </div>
   );
 };

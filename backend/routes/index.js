@@ -6,11 +6,14 @@ import orderRoutes from "./order-routes.js";
 import categoryRoutes from "./category-routes.js";
 import productRoutes from "./product-routes.js";
 import brandRoutes from "./brand-routes.js";
+import uploadRoutes from "./upload-routes.js";
 
 router.use("/user", userRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/brands", brandRoutes);
 router.use("/orders", orderRoutes);
 router.use("/products", productRoutes);
+
+router.use("/uploads", uploadRoutes);
 
 export default router;
