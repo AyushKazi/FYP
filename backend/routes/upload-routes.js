@@ -1,13 +1,18 @@
 import multer from "multer";
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const router = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // To set the storage info (such as destination and file name)
 // used in "upload" function
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, path.join(__dirname, "../uploads"));
   },
+
   filename(req, file, cb) {
     cb(
       null,
@@ -32,7 +37,7 @@ const checkFileType = (file, cb) => {
 
 // Here file is uploaded
 const upload = multer({
-  storage: storage,
+  storage,
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
@@ -49,7 +54,15 @@ router.post("/", upload.single("image"), async (req, res) => {
       "No file received or invalid image file type! Image type must be one of the following (jpg|jpeg|png)"
     );
   }
-  res.send(`/${req.file.path.replace("\\", "/")}`);
+  console.log(req.file);
+  //   console.log(req.file.path);
+  const filename = path.basename(req.file.path);
+
+  console.log(filename);
+  // Return only the filename
+  res.send(`/uploads/${filename}`);
+  //   res.send(`${req.file.path.replace("\\", "/")}`);
+  //   res.send(req.file.path);
 });
 
 export default router;

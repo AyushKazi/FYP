@@ -11,6 +11,7 @@ const app = express();
 // reading environmetal variable file
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import { fileURLToPath } from "url";
 dotenv.config();
 
 // database connection
@@ -33,7 +34,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1", api);
 
 // Upload
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__dirname);
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.listen(PORT, () => {
