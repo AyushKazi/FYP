@@ -2,10 +2,12 @@ import React from "react";
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../features/cart/cart-action";
+import { apiUrl } from "../Product/ProductCard";
 // import { removeProduct } from "../../features/cart-slice";
 
 export const CartCard = ({ item }) => {
   const dispatch = useDispatch();
+  console.log(item);
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
@@ -17,7 +19,7 @@ export const CartCard = ({ item }) => {
         <div className="1 flex justify-center  ">
           <div className="image md:w-52 md:max-h-48  rounded-md overflow-hidden border border-blue-">
             <img
-              src={item.image}
+              src={`${apiUrl}${item.imagePath}`}
               alt=""
               className="w-full h-full object-cover"
             />

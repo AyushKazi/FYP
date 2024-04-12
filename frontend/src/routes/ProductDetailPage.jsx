@@ -1,19 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Rating from "../components/Product/Rating";
 // import ProductCard from "../components/Product/ProductCard";
 import { FaCaretDown } from "react-icons/fa";
-import products from "../data/product";
+// import products from "../data/product";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cart-action";
+import axios from "axios";
+import { apiUrl } from "../components/Product/ProductCard";
+
+const initialState = {
+  product: { category: {}, reviews: [], brand: {} },
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "PRODUCT_DETAIL_SUCCESS":
+      return { ...state, product: action.payload };
+  }
+};
+
 const ProductDetailPage = () => {
-  const dispatch = useDispatch();
+  const dispatchRedux = useDispatch();
   const [qty, setQty] = useState(1);
-  const { id: productID } = useParams();
-  const product = products.find((p) => p.product_id === productID);
+  const params = useParams();
 
-  const { product_id, name, image, price, countInStock } = product;
+  const proID = params.id;
+  // console.log(proID);
 
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { product } = state;
+  const { category, brand, reviews, ...productDetails } = product;
+  console.log(state);
+  // console.log(category);
+
+  // const product = products.find((p) => p.product_id === productID);
+
+  const { product_id, name, imagePath, price, countInStock } = productDetails;
+  // console.log(imagePath);
   //qty add
   const handlePlusButton = () => {
     setQty(qty + 1);
@@ -25,8 +50,33 @@ const ProductDetailPage = () => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addToCart({ product_id, name, image, price, countInStock, qty }));
+    dispatchRedux(
+      addToCart({ product_id, name, imagePath, price, countInStock, qty })
+    );
   };
+
+  useEffect(() => {
+    const getProductDetails = async () => {
+      try {
+        // console.log(apiUrl);
+        const { data } = await axios.get(
+          `http://localhost:3001/api/v1/products/${params.id}`
+        );
+
+        console.log("product detail", data);
+        dispatch({
+          type: "PRODUCT_DETAIL_SUCCESS",
+          payload: data,
+        });
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+
+        throw new Error(error);
+      }
+    };
+
+    getProductDetails();
+  }, [params.id]);
 
   return (
     <>
@@ -39,11 +89,11 @@ const ProductDetailPage = () => {
         {/* image and details */}
         <div className="top grid my-3 md:grid-cols-2 rounded-md overflow-hidden p-2 ">
           {/* image grid 1 */}
-          <div className="image ">
+          <div className="image border border-gray-200 max-h-[550px] ">
             <img
-              src={product.image}
+              src={`${apiUrl}${productDetails.imagePath}`}
               alt=""
-              className="w-full h-full rounded-md "
+              className="w-full h-full rounded-md  "
             />
           </div>
 
@@ -51,7 +101,7 @@ const ProductDetailPage = () => {
           <div className="details space-y-3  lg:space-y-6 mt-3 md:mt-0 px-2 md:mx-4 lg:mx-6 relative">
             {/* title */}
             <div className="title font-semibold text-3xl lg:text-4xl ">
-              {product.name}
+              {productDetails.name}
             </div>
 
             <hr className="border border-neutral-200" />
@@ -61,7 +111,7 @@ const ProductDetailPage = () => {
               <div className="category  text-xs ">
                 Category :{" "}
                 <span className="px-2 py-1 rounded-xl bg-[#D9D9D9]">
-                  {product.category}
+                  {category.name}
                 </span>
               </div>
 
@@ -69,27 +119,29 @@ const ProductDetailPage = () => {
               <div className="brand text-xs ">
                 Brand :{" "}
                 <span className="px-2 py-1 rounded-xl bg-[#D9D9D9]">
-                  {product.brand}
+                  {brand.name}
                 </span>
               </div>
             </div>
             {/* rating */}
             <div className="rating ">
               <Rating
-                value={product.rating}
-                text={`${product.numReviews} reviews`}
+                value={productDetails.rating}
+                text={`${productDetails.numReviews} reviews`}
               />
             </div>
             {/* price */}
             <div className="price text-3xl  lg:text-4xl font-light">
-              NPR. {product.price} /-
+              NPR. {productDetails.price} /-
             </div>
             <hr className="border border-neutral-200" />
 
             {/* div for after md breakpoint to align items stick to bottom */}
             <div className="space-y-3 lg:space-y-4  flex flex-col lg:absolute bottom-0  lg:w-1/2">
               {/* stock */}
-              <div className="text-sm">In Stock : {product.countInStock}</div>
+              <div className="text-sm">
+                In Stock : {productDetails.countInStock}
+              </div>
               {/* quantity */}
               <div className="flex items-center border-gray-100">
                 <span
@@ -136,7 +188,7 @@ const ProductDetailPage = () => {
             </button>
           </div>
           <div className="description border rounded-b-md text-xs lg:text-sm  px-4 lg:px-6 py-2 text-justify">
-            {product.description}
+            {productDetails.description}
           </div>
         </div>
         {/* end of product description */}

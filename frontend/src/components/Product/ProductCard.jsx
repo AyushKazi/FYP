@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const { product_id, name, imagePath, price, countInStock, numReviews } =
     product;
-  console.log(imagePath);
+  // console.log(imagePath);
 
   const qty = 1;
   const addToCartHandler = () => {
