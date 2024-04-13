@@ -237,8 +237,51 @@ const updateProduct = async (req, res) => {
   }
 };
 
+// @desc    To fetch all products for admin
+// @route   PUT /api/v1/products
+// @access  Protected/Admin
+const findAllProducts = async (req, res) => {
+  try {
+    const products = await Product.findAll({
+      attributes: [
+        "product_id",
+        "name",
+        "description",
+        "price",
+        "imagePath",
+        "countInStock",
+        "user_id",
+        "category_id",
+        "brand_id",
+        "featured",
+        [sequelize.col("category.name"), "category_name"],
+        [sequelize.col("brand.name"), "brand_name"],
+      ],
+
+      order: [["createdAt", "DESC"]],
+
+      include: [
+        {
+          model: Category,
+          as: "category",
+          attributes: [],
+        },
+        {
+          model: Brand,
+          as: "brand",
+          attributes: [],
+        },
+      ],
+    });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export {
   findProductById,
+  findAllProducts,
   findAllFeaturedProducts,
   createProduct,
   updateProduct,

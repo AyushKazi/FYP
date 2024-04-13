@@ -21,10 +21,14 @@ const reducer = (state, action) => {
   }
 };
 
-const PaymentButton = ({ paymentMethod, orderId, amount, onSubmit }) => {
+const PaymentButton = ({ paymentMethod, orderId, amount }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state) => state.authUser);
+  console.log(userInfo);
+
+  // const { first_name, email, contact_number } = userInfo;
   const { success } = state;
   console.log("success value: ", success);
 
@@ -52,6 +56,46 @@ const PaymentButton = ({ paymentMethod, orderId, amount, onSubmit }) => {
     }
   };
 
+  console.log(amount);
+
+  const onKhaltiClick = async ({
+    payment_method,
+    total,
+    orderId,
+    userInfo,
+  }) => {
+    const payload = {
+      return_url: "http://localhost:5173/orderComplete",
+      website_url: "http://localhost:5173/",
+      amount: 1300,
+      purchase_order_id: "test12",
+      purchase_order_name: "test",
+      customer_info: {
+        name: "Khalti Bahadur",
+        email: "example@gmail.com",
+        phone: "9800000123",
+      },
+    };
+
+    const response = await axios.post(
+      "http://localhost:3001/api/v1/khalti/pay",
+      payload
+    );
+
+    paymentHandler(
+      { payment_method: "Khalti", is_paid: 1 },
+      "Payment with Khalti successful. Order Completed !"
+    );
+
+    console.log();
+    const url = response.data.payment_url;
+    // console.log(url);
+    // navigate(url);
+    // if (response) {
+    window.location.href = `${url}`;
+    // }
+  };
+
   // After success payment
   useEffect(() => {
     if (success) {
@@ -69,8 +113,6 @@ const PaymentButton = ({ paymentMethod, orderId, amount, onSubmit }) => {
     }
   }, [success, navigate]);
 
-  const onKhaltiClick = () => {};
-
   return (
     <>
       {paymentMethod === "COD" && (
@@ -79,7 +121,6 @@ const PaymentButton = ({ paymentMethod, orderId, amount, onSubmit }) => {
           onClick={(e) => {
             e.preventDefault();
             paymentHandler({ payment_method: "COD" });
-            submitHandler(e);
           }}
           className="w-full md:w-full py-3 mb-3 my-4 bg-white  text-black rounded-sm hover:bg-neutral-700 border border-black hover:text-white hover:opacity-90 hover:duration-300"
         >
@@ -90,7 +131,15 @@ const PaymentButton = ({ paymentMethod, orderId, amount, onSubmit }) => {
       {paymentMethod === "Khalti" && (
         <button
           type="submit"
-          onSubmit={onKhaltiClick}
+          onClick={(e) => {
+            e.preventDefault();
+            onKhaltiClick({
+              payment_method: "Khalti",
+              orderId: orderId,
+              total: amount,
+              userInfo: userInfo,
+            });
+          }}
           className="w-full md:w-full py-3 mb-3 my-4 bg-purple-800  text-white rounded-sm hover:bg-purple-600 border border-black hover:opacity-90 hover:duration-300"
         >
           Pay with Khalti

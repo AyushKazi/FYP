@@ -6,6 +6,7 @@ import {
   deleteProduct,
   findAllFeaturedProducts,
   findProductById,
+  findAllProducts,
   updateProduct,
 } from "../controllers/product-controllers.js";
 const router = express.Router();
@@ -22,7 +23,7 @@ router.route("/:id").get(findProductById);
 // router.post("/:id/reviews", auth, createProductReview);
 
 // Admin
-// router.get("/", auth, authAdmin, findAllProducts);
+router.get("/", auth, authAdmin, findAllProducts);
 router.post("/", auth, authAdmin, createProduct);
 router.delete("/:id", auth, authAdmin, deleteProduct);
 router.put("/:id", auth, authAdmin, updateProduct);
