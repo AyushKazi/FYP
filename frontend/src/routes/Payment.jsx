@@ -23,6 +23,8 @@ const Payment = () => {
   //extractig order id from params
   const [searchParams, setSearchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const shipad = useSelector((state) => state.cart.shippingAddress);
+  console.log(shipad);
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const { order } = state;
@@ -55,9 +57,10 @@ const Payment = () => {
         throw new Error(error);
       }
     };
-
-    getOrderDetails();
-  }, [orderId, token]);
+    if (orderId) {
+      getOrderDetails();
+    }
+  }, [orderId]);
 
   const [paymentMethod, setPaymentMethod] = useState("COD"); // Default to COD
 
@@ -66,11 +69,17 @@ const Payment = () => {
     setPaymentMethod(event.target.value);
   };
 
+  const submitHandler = (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    // Add your form submission logic here, such as sending data to a server
+    console.log("Form submitted with payment method:", paymentMethod);
+  };
+
   return (
     <>
       <div className="main flex flex-col  p-4 lg:flex-row lg:justify-around lg:my-14 max-w-screen-xl mx-auto">
         <div className="shipping p-3 lg:p-6  border bg-neutral-50 rounded-md drop-shadow-lg md:my-6 md:mx-6 md:px-6 lg:my-8 lg:w-2/5">
-          <form>
+          <form onSubmit={submitHandler}>
             <h1 className="mb-4 mx-4 text-xl font-medium">Pay with</h1>
             <div className="mb-3 mx-3">
               <label>
@@ -100,6 +109,7 @@ const Payment = () => {
               paymentMethod={paymentMethod}
               orderId={orderId}
               amount={order.total_amount}
+              onSubmit={submitHandler}
             />
           </form>
         </div>

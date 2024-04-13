@@ -71,7 +71,7 @@ const Checkout = () => {
     if (shippingAddress && cartItems.length !== 0) {
       createOrder();
     }
-  }, [shippingAddress, cartItems, dispatchRedux, navigate, token, total]);
+  }, [shippingAddress, cartItems, dispatchRedux, token, total]);
 
   return (
     <>

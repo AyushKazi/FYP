@@ -5,6 +5,8 @@ import { IoIosSearch } from "react-icons/io";
 import logo from "../../assets/electroLogo.png";
 import { Link } from "react-router-dom";
 import Products from "../../routes/Products";
+import { PiCaretDownBold } from "react-icons/pi";
+
 import CartPage from "../../routes/CartPage";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/authUser/authUser-action";
@@ -48,10 +50,26 @@ const NavBar = () => {
             <img
               src={logo}
               alt=""
-              className=" w-30 h-7 mx-12 ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
+              className=" w-30 h-7  ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
             />
           </Link>
 
+          <div className="hidden relative lg:inline-block text-left group ">
+            <button className="flex items-center justify-center text-sm font-medium md:block px-4 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500">
+              <p className="flex items-center gap-1">
+                Shop by <PiCaretDownBold className="" />
+              </p>
+            </button>
+
+            <div className="origin-top-right absolute right-0 mt-1 w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
+              <Link className="dropdown-item block px-5 py-2 text-sm hover:bg-white hover:text-black">
+                Category
+              </Link>
+              <Link className="dropdown-item block px-5 py-2 text-sm hover:bg-white hover:text-black">
+                Brand
+              </Link>
+            </div>
+          </div>
           {/* Search Bar */}
           <div className="search flex relative items-center  h-[35px]  w-1/2 ">
             <input
@@ -82,11 +100,7 @@ const NavBar = () => {
               <div className="relative inline-block text-left group">
                 {" "}
                 {/* Add group class */}
-                <button
-                  onMouseEnter={() => setIsDropdownOpenAdmin(true)} // Consider removing if click is preferred
-                  onMouseLeave={() => setIsDropdownOpenAdmin(false)} // Consider removing if click is preferred
-                  className="sign hidden text-sm font-medium md:block px-6 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500"
-                >
+                <button className="sign hidden text-sm font-medium md:block px-6 py-1 border border-black bg-white hover:bg-white hover:border-white transition-all duration-500">
                   Admin
                 </button>
                 {/* Conditionally rendering removed, using hidden and group-hover:block for visibility control */}
