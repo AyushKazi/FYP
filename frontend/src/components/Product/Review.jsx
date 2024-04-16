@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Rating from "./Rating";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -22,6 +22,36 @@ const Review = ({ reviews, reviewUpdated }) => {
   // To check if the user has already submitted review
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [userHasBought, setUserHasBought] = useState(null);
+
+  useEffect(() => {
+    const check = async () => {
+      const { data } = await axios.get(`${apiUrl}/api/v1/orders/myorders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      console.log(data);
+
+      let result = false;
+      data.forEach((order) => {
+        if (order.status === "Delivered") {
+          order.products.forEach((product) => {
+            if (product.product_id === parseInt(params.id)) {
+              result = true;
+              return;
+            }
+          });
+        }
+      });
+
+      console.log(result);
+
+      setUserHasBought(result ? result : false);
+    };
+
+    if (token) {
+      check();
+    }
+  }, [token, params.id]);
 
   // useEffect to evaluate reviews
   useEffect(() => {
@@ -64,6 +94,8 @@ const Review = ({ reviews, reviewUpdated }) => {
         style: { backgroundColor: "black", color: "white" },
       });
 
+      setComment("");
+
       reviewUpdated();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -84,7 +116,7 @@ const Review = ({ reviews, reviewUpdated }) => {
           </button>
         </div>
         <div className="description border rounded-b-md text-xs space-y-4  md:text-lg lg:text-sm  px-4 lg:px-6 py-2 text-justify">
-          <div className=" ">
+          <div className="">
             {reviews.length === 0 ? (
               <p className="pt-2 text-red-500">There are no reviews yet.</p>
             ) : (
@@ -111,38 +143,86 @@ const Review = ({ reviews, reviewUpdated }) => {
             )}
           </div>
 
-          <form
-            onSubmit={submitHandler}
-            action=""
-            className=" flex flex-col gap-4  "
-          >
-            <h3 className="font-medium">Write a review</h3>
-            <select
-              value={rating}
-              onChange={(e) => setRating(Number(e.target.value))}
-              className=" w-36 p-2 border border-gray-300 rounded-md  focus:outline-slate-400"
-            >
-              <option value="1">1 - Poor</option>
-              <option value="2">2 - Fair</option>
-              <option value="3">3 - Good</option>
-              <option value="4">4 - Very Good</option>
-              <option value="5">5 - Excellent</option>
-            </select>
+          {userInfo && userInfo.isAdmin === false ? (
+            <>
+              {userHasBought === null ? (
+                <></>
+              ) : userHasBought === false ? (
+                <>
+                  {" "}
+                  <div
+                    className="bg-neutral-100 border border-neutral-400 text-neutral-600 px-4 py-3  rounded relative"
+                    role="alert"
+                  >
+                    <strong class="font-bold">Buy </strong>
+                    <span class="block sm:inline">
+                      product to submit a review !
+                    </span>
+                  </div>
+                </>
+              ) : alreadySubmitted ? (
+                <>
+                  <div
+                    className="bg-neutral-100 border border-neutral-400 text-neutral-600 px-4 py-3  rounded relative"
+                    role="alert"
+                  >
+                    <strong class="font-bold">Already </strong>
+                    <span class="block sm:inline">submitted a review !</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <form
+                    onSubmit={submitHandler}
+                    action=""
+                    className=" flex flex-col gap-4  "
+                  >
+                    <h3 className="font-medium">Write a review</h3>
+                    <select
+                      value={rating}
+                      onChange={(e) => setRating(Number(e.target.value))}
+                      className=" w-36 p-2 border border-gray-300 rounded-md  focus:outline-slate-400"
+                    >
+                      <option value="1">1 - Poor</option>
+                      <option value="2">2 - Fair</option>
+                      <option value="3">3 - Good</option>
+                      <option value="4">4 - Very Good</option>
+                      <option value="5">5 - Excellent</option>
+                    </select>
 
-            <div className="reviewArea border border-neutral-400 h-20 ">
-              <input
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Write a comment..."
-                className="w-full h-full focus:shadow-lg  p-2 focus:outline-slate-400"
-              />
-            </div>
+                    <div className="reviewArea border border-neutral-400 h-20 ">
+                      <input
+                        type="text"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Write a comment..."
+                        className="w-full h-full focus:shadow-lg  p-2 focus:outline-slate-400"
+                      />
+                    </div>
 
-            <button className="w-36 px-10 py-2  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
-              Submit
-            </button>
-          </form>
+                    <button className="w-36 px-10 py-2  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
+                      Submit
+                    </button>
+                  </form>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="border border-red-300 py-2">
+                <p>
+                  Please{" "}
+                  <Link
+                    to="/login"
+                    className="text-red-800 underline hover:cursor-pointer"
+                  >
+                    Login
+                  </Link>{" "}
+                  to write a review
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
