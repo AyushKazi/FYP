@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cart-action";
 import axios from "axios";
 import { apiUrl } from "../components/Product/ProductCard";
+import Review from "../components/Product/Review";
 
 const initialState = {
   product: { category: {}, reviews: [], brand: {} },
@@ -54,6 +55,8 @@ const ProductDetailPage = () => {
       addToCart({ product_id, name, imagePath, price, countInStock, qty })
     );
   };
+  // If there is change in the product details (i.e review)
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -76,8 +79,11 @@ const ProductDetailPage = () => {
     };
 
     getProductDetails();
-  }, [params.id]);
+  }, [params.id, changed]);
 
+  const reviewUpdated = () => {
+    setChanged(true);
+  };
   return (
     <>
       <div className="main max-w-screen-xl mx-3 my-3 md:mx-5 md:my-5 xl:mx-auto lg:mx-7 ">
@@ -194,28 +200,7 @@ const ProductDetailPage = () => {
         {/* end of product description */}
 
         {/* reviews section */}
-        <div className="description lg:my-8 px-2 md:px-0  my-8">
-          <div className="title flex justify-between uppercase font-semibold  text-sm rounded-t-md bg-neutral-300 text-black px-4 py-1 lg:py-2 lg:px-6 border-x-2 border-neutral-900">
-            <p>Reviews</p>
-            <button className="text-lg lg:text-xl">
-              <FaCaretDown />
-            </button>
-          </div>
-          <div className="description border rounded-b-md text-xs space-y-4 md:text-lg lg:text-sm  px-4 lg:px-6 py-2 text-justify">
-            <p>There are no reviews yet.</p>
-
-            <h3 className="font-medium">Write a review</h3>
-            <Rating />
-
-            <div className="reviewArea border border-neutral-400 h-20 p-2 ">
-              <input type="text" placeholder="Write a comment..." />
-            </div>
-
-            <button className="flex  px-10 py-2  bg-neutral-700 text-white rounded-md hover:bg-white border hover:border-black hover:text-black hover:opacity-90 hover:duration-300">
-              Submit
-            </button>
-          </div>
-        </div>
+        <Review reviews={reviews} reviewUpdated={reviewUpdated} />
         {/* end of reviews */}
 
         {/* related products */}

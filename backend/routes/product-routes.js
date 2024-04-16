@@ -8,6 +8,7 @@ import {
   findProductById,
   findAllProducts,
   updateProduct,
+  createProductReview,
 } from "../controllers/product-controllers.js";
 const router = express.Router();
 
@@ -19,8 +20,8 @@ router.route("/:id").get(findProductById);
 // // Products by category
 // router.get("/category/:id", findProductsByCategory);
 
-// // reviews
-// router.post("/:id/reviews", auth, createProductReview);
+// reviews
+router.post("/:id/reviews", auth, createProductReview);
 
 // Admin
 router.get("/", auth, authAdmin, findAllProducts);

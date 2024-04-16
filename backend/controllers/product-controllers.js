@@ -179,8 +179,8 @@ const updateProduct = async (req, res) => {
     const product = await Product.findByPk(req.params.id);
 
     if (!product) {
-      res.status(404).json({ message: "Product not found" });
-      //   throw new Error("Product could not found!");
+      res.status(404);
+      throw new Error("Product could not found!");
     }
 
     if (product) {
@@ -243,33 +243,17 @@ const updateProduct = async (req, res) => {
 const findAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
-      attributes: [
-        "product_id",
-        "name",
-        "description",
-        "price",
-        "imagePath",
-        "countInStock",
-        "user_id",
-        "category_id",
-        "brand_id",
-        "featured",
-        [sequelize.col("category.name"), "category_name"],
-        [sequelize.col("brand.name"), "brand_name"],
-      ],
-
-      order: [["createdAt", "DESC"]],
-
+      attributes: { exclude: ["category_id", "brand_id"] },
       include: [
         {
           model: Category,
-          as: "category",
-          attributes: [],
+          required: true,
+          attributes: ["category_id", "name"],
         },
         {
           model: Brand,
-          as: "brand",
-          attributes: [],
+          required: true,
+          attributes: ["brand_id", "name"],
         },
       ],
     });
@@ -279,6 +263,41 @@ const findAllProducts = async (req, res) => {
   }
 };
 
+// @desc    Create product review
+// @route   POST /api/v1/products/:id/reviews
+// @access  Private
+const createProductReview = async (req, res) => {
+  const { rating, comment } = req.body;
+
+  // review object
+  const review = {
+    rating: parseFloat(rating),
+    comment,
+    product_id: req.params.id,
+    user_id: req.user.id,
+  };
+  // To create review
+  const createdReview = await Review.create(review);
+
+  // To update numReviews and rating of the corresponding product
+  const product = await Product.findByPk(req.params.id, {
+    include: {
+      model: Review,
+    },
+  });
+  product.numReviews = product.reviews.length;
+  product.rating =
+    product.reviews.reduce(
+      (acc, product) => parseFloat(product.rating) + acc,
+      0
+    ) / product.reviews.length;
+
+  await product.save();
+
+  // created review
+  res.status(201).json(createdReview);
+};
+
 export {
   findProductById,
   findAllProducts,
@@ -286,4 +305,5 @@ export {
   createProduct,
   updateProduct,
   deleteProduct,
+  createProductReview,
 };
