@@ -268,15 +268,113 @@ const cancelOrder = async (req, res) => {
 // @desc    Get all orders
 // @route   PUT /api/orders
 // @access  Private
-const getOrders = (req, res) => {
-  res.json("get all orders");
+const getOrders = async (req, res) => {
+  const orders = await Order.findAll({
+    where: {
+      createdAt: {
+        [Op.and]: {
+          [Op.gte]: req.params.from,
+          [Op.lte]: req.params.to,
+        },
+      },
+    },
+
+    attributes: {
+      exclude: ["shipping_address_id"],
+    },
+
+    order: [["createdAt", "DESC"]],
+
+    include: [
+      {
+        model: Product,
+        attributes: ["product_id", "name"],
+
+        through: {
+          attributes: ["orderline_id", "quantity", "line_total"],
+        },
+      },
+
+      {
+        model: ShippingAddress,
+      },
+    ],
+  });
+
+  if (orders) {
+    res.json(orders);
+  } else {
+    throw new Error(`Orders could not fetched!`);
+  }
 };
 
 // @desc    To update order
 // @route   PUT /api/v1/orders/:id
 // @access  Private
-const updateOrder = (req, res) => {
-  res.json("update order");
+const updateOrder = async (req, res) => {
+  const orderId = req.params.id;
+  const { status } = req.body;
+
+  const order = await Order.findByPk(orderId);
+
+  if (order) {
+    if (status === "Delivered") {
+      order.is_delivered = 1;
+      order.delivered_at = Date.now();
+
+      if (order.payment_method === "COD") {
+        order.is_paid = 1;
+        order.paid_at = Date.now();
+      }
+
+      order.status = status;
+    }
+
+    if (status === "Cancelled") {
+      order.status = status;
+
+      // Changing stock
+      const orderStock = await Order.findOne({
+        where: {
+          order_id: orderId,
+        },
+
+        attributes: [],
+
+        // include
+        include: [
+          {
+            model: Product,
+            attributes: ["product_id"],
+
+            through: {
+              attributes: ["quantity"],
+            },
+          },
+        ],
+      });
+
+      const { products } = orderStock;
+
+      // Updating stock
+      for (const item of products) {
+        const product = await Product.findByPk(item.product_id);
+
+        if (product) {
+          product.countInStock += item.order_line.quantity;
+
+          await product.save();
+        }
+      }
+    }
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found!");
+  }
 };
 
 export {
