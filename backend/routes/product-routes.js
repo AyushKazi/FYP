@@ -9,10 +9,11 @@ import {
   findAllProducts,
   updateProduct,
   createProductReview,
+  getSearchedProducts,
 } from "../controllers/product-controllers.js";
 const router = express.Router();
 
-// router.get("/search", getSearchedProducts);
+router.get("/search", getSearchedProducts);
 
 router.route("/featured").get(findAllFeaturedProducts);
 router.route("/:id").get(findProductById);

@@ -1,11 +1,13 @@
 import db from "../models/index.js";
 import { sequelize } from "../config/db.js";
+import { Sequelize } from "sequelize";
 
 const Product = db.product;
 const Category = db.category;
 const Brand = db.brand;
 const Review = db.review;
 const User = db.user;
+const Op = Sequelize.Op;
 
 // @desc    Fetch all featured products
 // @route   GET api/v1/products
@@ -298,8 +300,30 @@ const createProductReview = async (req, res) => {
   res.status(201).json(createdReview);
 };
 
+// @desc    Get search products
+// @route   GET /api/v1/products/search?keyword=[keyword]
+// @access  Public
+
+const getSearchedProducts = async (req, res) => {
+  const keyword = req.query.keyword.toLowerCase();
+
+  const matchedProducts = await Product.findAll({
+    where: {
+      name: {
+        [Op.like]: `%${keyword}%`,
+      },
+    },
+
+    // limit: pageSize,
+    // offset: pageSize * (page - 1),
+  });
+
+  res.json({ matchedProducts });
+};
+
 export {
   findProductById,
+  getSearchedProducts,
   findAllProducts,
   findAllFeaturedProducts,
   createProduct,
