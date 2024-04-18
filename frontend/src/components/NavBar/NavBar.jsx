@@ -3,7 +3,7 @@ import { PiShoppingCartFill } from "react-icons/pi";
 import { PiUserBold } from "react-icons/pi";
 import { IoIosSearch } from "react-icons/io";
 import logo from "../../assets/electroLogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Products from "../../routes/Products";
 import { PiCaretDownBold } from "react-icons/pi";
 
@@ -16,12 +16,27 @@ const NavBar = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.authUser);
   const { totalQuantity } = useSelector((state) => state.cart);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCartData());
     }
   }, [isAuthenticated, dispatch]);
+
+  const [searchText, setSearchText] = useState("");
+
+  //searchHandler
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+
+    if (!searchText) return;
+
+    // console.log(searchText);
+    navigate(`/search/?q=${searchText.trim()}`);
+    setSearchText("");
+  };
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpenAdmin, setIsDropdownOpenAdmin] = useState(false);
@@ -71,14 +86,19 @@ const NavBar = () => {
             </div>
           </div>
           {/* Search Bar */}
-          <div className="search flex relative items-center  h-[35px]  w-1/2 ">
+          <form
+            onSubmit={searchSubmitHandler}
+            className="search flex relative items-center  h-[35px]  w-1/2 "
+          >
             <input
               className="rounded-full px-6 w-full h-full drop-shadow-2xl  "
               type="text"
+              onChange={(e) => setSearchText(e.target.value)}
+              value={searchText}
               placeholder="Search "
             ></input>
             <IoIosSearch className="absolute top-2 text-lg right-5  " />
-          </div>
+          </form>
 
           {/* buttons */}
 

@@ -28,6 +28,7 @@ import { ToastContainer } from "react-toastify";
 import Payment from "./routes/Payment";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OrderComplete from "./routes/OrderComplete";
+import SearchScreen from "./routes/SearchScreen";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUp /> },
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
+      { path: "/search", element: <SearchScreen /> },
       {
         element: <ProtectedRoutes />,
         children: [
