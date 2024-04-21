@@ -29,6 +29,7 @@ import Payment from "./routes/Payment";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OrderComplete from "./routes/OrderComplete";
 import SearchScreen from "./routes/SearchScreen";
+import FilterScreen from "./routes/FilterScreen";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/search", element: <SearchScreen /> },
+      { path: "/catBrandFilter", element: <FilterScreen /> },
       {
         element: <ProtectedRoutes />,
         children: [

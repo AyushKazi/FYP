@@ -7,6 +7,8 @@ import CategoryCard from "../components/Category/CategoryCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeaturedProductList } from "../features/featuredProducts/product-actions";
 import { getCategoryList } from "../features/category/category-actions";
+import { Link } from "react-router-dom";
+import { key } from "localforage";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -58,8 +60,13 @@ const Products = () => {
 
         {/* category list */}
         <div className=" flex flex-wrap justify-evenly  px-4 py-2 ">
-          {categories.map((category) => (
-            <CategoryCard category={category} key={category.category_id} />
+          {categories.map((category, index) => (
+            <Link
+              to={`catBrandFilter/?category=${category.category_id}`}
+              key={index}
+            >
+              <CategoryCard category={category} key={category.category_id} />
+            </Link>
           ))}
         </div>
       </div>

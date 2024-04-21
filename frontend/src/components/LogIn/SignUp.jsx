@@ -28,17 +28,17 @@ const SignUp = () => {
     dispatch(registerUser(data));
     reset();
 
-    toast.success("Registration Successful!", {
-      position: "top-right",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    // toast.success("Registration Successful!", {
+    //   position: "top-right",
+    //   autoClose: 4000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    // });
 
-    navigate("/login");
+    // navigate("/login");
   };
 
   return (

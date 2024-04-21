@@ -1,11 +1,12 @@
 import axios from "axios";
 import { setIsAuthenticated, setUserInfo } from "./authUser-slice";
+import { toast } from "react-toastify";
 
 export const authUser = (loginDetails) => {
   return async (dispatch) => {
     const { email, password } = loginDetails;
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
 
     try {
       // dispatch(userAuthRequest)
@@ -34,6 +35,11 @@ export const authUser = (loginDetails) => {
       dispatch(setIsAuthenticated(true));
 
       localStorage.setItem("firstLogin", true);
+
+      toast.success("Login successful!", {
+        position: "bottom-right",
+        style: { backgroundColor: "black", color: "white" },
+      });
     } catch (error) {
       console.log(error);
     }

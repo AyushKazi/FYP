@@ -4,6 +4,7 @@ import {
   userRegisterRequest,
   userRegisterSuccess,
 } from "./userRegister-slice";
+import { toast } from "react-toastify";
 
 export const registerUser = (registrationDetails) => {
   return async (dispatch) => {
@@ -29,14 +30,15 @@ export const registerUser = (registrationDetails) => {
         config
       );
 
+      toast.success("Registration Successful!", {
+        position: "bottom-right",
+        style: { backgroundColor: "black", color: "white" },
+      });
+
       //   dispatch(userRegisterSuccess(data.message));
-    } catch (error) {
-      // the error is first handled in
-      // custom error handler in errorMiddlewares.js
-      const errorMessage =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+
       //   dispatch(userRegisterFail(errorMessage));
     }
   };

@@ -10,36 +10,42 @@ const User = db.user;
 const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, contact, role } = req.body;
 
-  //checking if the user is already in the database.
-  const alreadyUser = await User.findOne({ where: { email } }).catch(
-    (error) => {
-      console.log("Error : ", error);
+  try {
+    //checking if the user is already in the database.
+    const alreadyUser = await User.findOne({ where: { email } }).catch(
+      (error) => {
+        console.log("Error : ", error);
+      }
+    );
+
+    //throw message if user already exists
+    if (alreadyUser) {
+      res.status(400);
+      throw new Error(`User '${email}' already exists!`);
     }
-  );
 
-  //throw message if user already exists
-  if (alreadyUser) {
-    return res.json({ message: "User already exists" });
-  }
+    const hashPassword = bycrypt.hashSync(password, 10);
+    const newUser = new User({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: hashPassword,
+      contact_number: contact,
+      role: role,
+    });
+    //saving the new user in the database
+    const savedUser = await newUser.save().catch((err) => {
+      console.log("Error : ", err);
+      res.status(500);
+      throw new Error("Cannot register user at the moment!");
+    });
 
-  const hashPassword = bycrypt.hashSync(password, 10);
-  const newUser = new User({
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-    password: hashPassword,
-    contact_number: contact,
-    role: role,
-  });
-  //saving the new user in the database
-  const savedUser = await newUser.save().catch((err) => {
-    console.log("Error : ", err);
-    res.json({ message: "Cannot register" });
-  });
-
-  //throw success message if the user is saved in the database
-  if (savedUser) {
-    res.json({ messgae: "Thanks for registering" });
+    //throw success message if the user is saved in the database
+    if (savedUser) {
+      res.json({ messgae: "Thanks for registering" });
+    }
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
 
