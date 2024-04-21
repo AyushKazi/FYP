@@ -9,13 +9,8 @@ export const addToCart = (item) => async (dispatch, getState) => {
   await localForage.setItem("cartItems", getState().cart.cartItems);
 
   toast.success("Added to cart successfully!", {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
+    position: "bottom-right",
+    style: { backgroundColor: "black", color: "white" },
   });
 
   // dispatch(updateSuccessMessage("Product added to cart successfully!"));
@@ -25,6 +20,11 @@ export const removeFromCart = (id) => async (dispatch, getState) => {
   dispatch(removeItemFromCart(id));
 
   await localForage.setItem("cartItems", getState().cart.cartItems);
+
+  toast.error("Product removed!", {
+    position: "top-right",
+    style: { backgroundColor: "black", color: "white" },
+  });
 
   // dispatch(updateSuccessMessage("Product removed from cart successfully!"));
 };

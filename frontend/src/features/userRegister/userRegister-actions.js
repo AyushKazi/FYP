@@ -24,7 +24,7 @@ export const registerUser = (registrationDetails) => {
       };
 
       // data from response (res from backend)
-      const { data } = await axios.post(
+      await axios.post(
         "http://localhost:3001/api/v1/user/register",
         { firstName, lastName, contact, email, password },
         config
@@ -37,8 +37,11 @@ export const registerUser = (registrationDetails) => {
 
       //   dispatch(userRegisterSuccess(data.message));
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
-
+      // toast.error(err?.data?.message || err.error);
+      toast.error(err?.response?.data?.message || err.message, {
+        position: "top-right",
+        style: { backgroundColor: "black", color: "white" },
+      });
       //   dispatch(userRegisterFail(errorMessage));
     }
   };

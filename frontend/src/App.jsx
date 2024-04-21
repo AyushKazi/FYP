@@ -30,6 +30,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import OrderComplete from "./routes/OrderComplete";
 import SearchScreen from "./routes/SearchScreen";
 import FilterScreen from "./routes/FilterScreen";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -65,8 +66,9 @@ const router = createBrowserRouter([
             children: [
               { path: "dashboard", element: <AdminDashboard />, index: true },
               { path: "orders", element: <AdminOrders /> },
-              { path: "users", element: <AdminUsers /> },
               { path: "products", element: <AdminProducts /> },
+
+              { path: "users", element: <AdminUsers /> },
               { path: "category", element: <AdminCategory /> },
               { path: "brands", element: <AdminBrand /> },
             ],

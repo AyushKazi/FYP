@@ -1,13 +1,14 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "../models/index.js";
+import asynchandler from "express-async-handler";
 
 const User = db.user;
 // @desc  add new user
 // @route POST api/v1/user/register
 // @access Public
 
-const registerUser = async (req, res) => {
+const registerUser = asynchandler(async (req, res) => {
   const { firstName, lastName, email, password, contact, role } = req.body;
 
   try {
@@ -47,13 +48,13 @@ const registerUser = async (req, res) => {
   } catch (error) {
     throw new Error(error.message);
   }
-};
+});
 
 // @desc  login user
 // @route POST api/v1/user/login
 // @access Public
 
-const loginUser = async (req, res) => {
+const loginUser = asynchandler(async (req, res) => {
   const { email, password } = req.body;
 
   //first of all, check user with email exist or not
@@ -64,7 +65,9 @@ const loginUser = async (req, res) => {
   );
 
   if (!userWithEmail) {
-    return res.status(404).json({ message: "User not found" });
+    // return res.status(404).json({ message: "User not found" });
+    res.status(400);
+    throw new Error(`User '${email}' not found!`);
   }
 
   //now check the password
@@ -73,8 +76,11 @@ const loginUser = async (req, res) => {
     userWithEmail.password
   );
 
-  if (!isPasswordValid)
-    return res.status(401).json({ message: "Email or passwprd is wrong." });
+  if (!isPasswordValid) {
+    res.status(400);
+    throw new Error("Email or password does not match!");
+    // return res.status(401).json({ message: "Email or passwprd is wrong." });
+  }
 
   const refreshToken = createRefreshToken({ id: userWithEmail.user_id });
 
@@ -93,7 +99,7 @@ const loginUser = async (req, res) => {
   }
   //message after succesfull login
   res.json({ message: "Welcome back! Login successful", refreshToken });
-};
+});
 
 // @desc    Get Access Token
 // @route   POST /api/v1/user/refreshToken

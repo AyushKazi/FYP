@@ -40,8 +40,12 @@ export const authUser = (loginDetails) => {
         position: "bottom-right",
         style: { backgroundColor: "black", color: "white" },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.response?.data?.message || err.message, {
+        position: "top-right",
+        style: { backgroundColor: "black", color: "white" },
+      });
     }
   };
 };

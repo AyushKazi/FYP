@@ -101,12 +101,7 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
     if (success) {
       toast.success("Payment Successful!", {
         position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        style: { backgroundColor: "black", color: "white" },
       });
 
       navigate("/orderComplete");

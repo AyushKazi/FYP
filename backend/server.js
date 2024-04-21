@@ -12,6 +12,7 @@ const app = express();
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
+import { errorHandler } from "./middlewares/error-middleware.js";
 dotenv.config();
 
 // database connection
@@ -39,6 +40,7 @@ const __dirname = path.dirname(__filename);
 console.log(__dirname);
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);
 });
