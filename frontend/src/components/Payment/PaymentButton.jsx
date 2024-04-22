@@ -101,7 +101,7 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
   // After success payment
   useEffect(() => {
     if (success) {
-      toast.success("Payment Successful!", {
+      toast.success(`Payment done with ${paymentMethod}`, {
         position: "top-right",
         style: { backgroundColor: "black", color: "white" },
       });

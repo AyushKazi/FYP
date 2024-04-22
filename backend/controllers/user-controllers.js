@@ -272,6 +272,32 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// @desc    To reset password
+// @route   POST /api/v1/user/reset
+// @access  Public (anything can hit it)
+const updateUserDetails = async (req, res) => {
+  try {
+    const { firstName, lastName, contactNumber } = req.body;
+
+    const user = await User.findByPk(req.user.id);
+
+    if (user) {
+      user.first_name = firstName || user.first_name;
+      user.last_name = lastName || user.last_name;
+      user.contact_number = contactNumber || user.contact_number;
+
+      await user.save();
+    }
+
+    res.json({ message: "User details updated successfully" });
+  } catch (err) {
+    res.status(500);
+    throw new Error(
+      "User details could not be updated at this moment. Try again!"
+    );
+  }
+};
+
 // access tokken for forget password
 // expires in 15m
 
@@ -289,6 +315,7 @@ const createRefreshToken = (payload) => {
 
 export {
   registerUser,
+  updateUserDetails,
   loginUser,
   forgotPassword,
   getAllUserInfo,

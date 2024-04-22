@@ -11,6 +11,7 @@ import {
   updatePassword,
   resetPassword,
   getAccessToken,
+  updateUserDetails,
 } from "../controllers/user-controllers.js";
 import auth from "../middlewares/auth.js";
 
@@ -23,6 +24,8 @@ router.post("/forgotPassword", forgotPassword);
 
 // private user routes
 router.get("/profile", auth, getUserProfile);
+router.put("/info", auth, updateUserDetails);
+
 router.get("/logout", logout);
 router.put("/updatePassword", auth, updatePassword);
 router.post("/resetPassword", auth, resetPassword);
