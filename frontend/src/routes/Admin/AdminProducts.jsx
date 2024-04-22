@@ -6,6 +6,7 @@ import axios from "axios";
 import { apiUrl } from "../../components/Product/ProductCard";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import DeleteProductModal from "../../components/Admin/Product/DeleteProductModal";
 const AdminProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const toggleShowModal = () => {
@@ -16,6 +17,22 @@ const AdminProducts = () => {
       document.body.classList.remove("disable-scrolling");
     }
   };
+  const toggleUpdateShowModal = () => {
+    setIsUpdate(!isUpdate);
+    setShowModal(!showModal);
+    if (showModal == false) {
+      document.body.classList.add("disable-scrolling");
+    } else {
+      document.body.classList.remove("disable-scrolling");
+    }
+  };
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const toggleShowDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [searchString, setSearchString] = useState("");
   const handleSearchStringChange = (e) => {
@@ -25,8 +42,10 @@ const AdminProducts = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const perpage = 4;
+  const perpage = 20;
   const [totalPages, setTotalPages] = useState(1);
+
+  const [idToUpdate, setIdToUpdate] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,7 +53,7 @@ const AdminProducts = () => {
       setAllProducts(data);
     };
     fetchProducts();
-  }, []);
+  }, [showModal, showDeleteModal]);
 
   useEffect(() => {
     if (searchString !== "") {
@@ -63,7 +82,24 @@ const AdminProducts = () => {
   return (
     <>
       <div className="pb-5 flex justify-between px-20">
-        {showModal && <ProductModal closeHandler={toggleShowModal} />}
+        {showModal && !isUpdate && (
+          <ProductModal closeHandler={toggleShowModal} isAdd={true} />
+        )}
+        {showDeleteModal && (
+          <DeleteProductModal
+            closeHandler={toggleShowDeleteModal}
+            id={idToUpdate}
+          />
+        )}
+        {showModal && isUpdate && (
+          <ProductModal
+            closeHandler={toggleUpdateShowModal}
+            data={allProducts.find(
+              (product) => product.product_id === idToUpdate
+            )}
+            isAdd={false}
+          />
+        )}
         <h1 className="text-2xl font-medium">All products</h1>
         <div className="flex gap-x-3">
           <p
@@ -115,8 +151,20 @@ const AdminProducts = () => {
                       <td className="p-3">{product.brand.name}</td>
                       <td className="p-3">
                         <div className="justify-center flex gap-x-2">
-                          <BiSolidEditAlt className="size-5 cursor-pointer" />
-                          <MdDelete className="size-5 text-red-500 cursor-pointer" />
+                          <BiSolidEditAlt
+                            onClick={() => {
+                              setIdToUpdate(product.product_id);
+                              toggleUpdateShowModal();
+                            }}
+                            className="size-5 cursor-pointer"
+                          />
+                          <MdDelete
+                            className="size-5 text-red-500 cursor-pointer"
+                            onClick={() => {
+                              setIdToUpdate(product.product_id);
+                              toggleShowDeleteModal();
+                            }}
+                          />
                         </div>
                       </td>
                     </>

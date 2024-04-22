@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -20,19 +20,33 @@ export default function useProduct() {
     featured: 0,
   });
 
+  const [oldImagePath, setOldImagePath] = useState("");
+
   const {
     name,
     price,
     description,
     countInStock,
+    imagePath,
     category_id,
     brand_id,
     featured,
   } = formData;
 
-  //   const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const getImagePath = async (file) => {
+    if (imagePath !== "" && imagePath !== oldImagePath) {
+      await axios.post(
+        "http://localhost:3001/api/v1/uploads/delete",
+        { imagePath: imagePath },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
     const { data } = await axios.post(
       "http://localhost:3001/api/v1/uploads",
       { image: file },
@@ -83,21 +97,40 @@ export default function useProduct() {
     );
     return data;
   };
+  const updateProduct = async (formData, id) => {
+    const { data } = await axios.put(
+      `http://localhost:3001/api/v1/products/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    await axios.post(
+      "http://localhost:3001/api/v1/uploads/delete",
+      { imagePath: oldImagePath },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const onSubmit = async (event) => {
+    return data;
+  };
+
+  const onSubmit = async (event, id) => {
     event.preventDefault();
     try {
-      // setIsLoading(true);
-      // if(update && id){
-      //   const data = formData
-      //   // console.log(data,id)
-      //   const response = await updateProduct(id,data);
+      if (id) {
+        const response = await updateProduct(formData, id);
+      } else {
+        const response = await addProduct(formData);
+      }
       //   setIsLoading(false);
-      //   toast.success("Product updated successfully");
-      // }else{
-      const response = await addProduct(formData);
-      //   setIsLoading(false);
-      navigate("/admin/products");
       toast.success("Product added successfully");
       return true;
 
@@ -118,8 +151,11 @@ export default function useProduct() {
     category_id,
     brand_id,
     featured,
+    imagePath,
     onSubmit,
     handleChange,
     setFormData,
+    setUpdate,
+    setOldImagePath,
   };
 }

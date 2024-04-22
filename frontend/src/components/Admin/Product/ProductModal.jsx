@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import useProduct from "../../../hooks/useProduct";
+import { apiUrl } from "../../Product/ProductCard";
 
-export default function ProductModal({ closeHandler }) {
+export default function ProductModal({ closeHandler, isAdd, data }) {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
 
@@ -15,9 +16,12 @@ export default function ProductModal({ closeHandler }) {
     category_id,
     brand_id,
     featured,
+    imagePath,
     onSubmit,
     handleChange,
     setFormData,
+    setUpdate,
+    setOldImagePath,
   } = useProduct();
 
   useEffect(() => {
@@ -33,6 +37,20 @@ export default function ProductModal({ closeHandler }) {
     };
     fetchCategories();
     fetchBrands();
+    if (data && !isAdd) {
+      setFormData({
+        name: data.name,
+        price: data.price,
+        description: data.description,
+        imagePath: data.imagePath,
+        countInStock: data.countInStock,
+        category_id: data.category.category_id,
+        brand_id: data.brand.brand_id,
+        featured: data.featured,
+      });
+      setOldImagePath(data.imagePath);
+      setUpdate(true);
+    }
   }, []);
 
   return (
@@ -48,15 +66,25 @@ export default function ProductModal({ closeHandler }) {
           }}
         >
           <div className="py-3  pb-8 flex justify-between items-center">
-            <h2 className="text-xl font-bold ">Add Product</h2>
+            <h2 className="text-xl font-bold ">
+              {isAdd ? "Add" : "Update"} Product
+            </h2>
             <IoClose className="size-8 cursor-pointer" onClick={closeHandler} />
           </div>
           <form
             encType="multipart/form-data"
             onSubmit={(e) => {
-              const response = onSubmit(e);
+              let response = false;
+              if (data && !isAdd) {
+                e.preventDefault();
+                response = onSubmit(e, data.product_id);
+              } else {
+                response = onSubmit(e);
+              }
               if (response) {
-                closeHandler();
+                const timer = setTimeout(() => {
+                  closeHandler();
+                }, 1000);
               }
             }}
           >
@@ -199,7 +227,7 @@ export default function ProductModal({ closeHandler }) {
                   Image *
                 </label>
                 <input
-                  required
+                  required={isAdd ? true : false}
                   name="image"
                   title="image"
                   type="file"
@@ -209,10 +237,15 @@ export default function ProductModal({ closeHandler }) {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-2 gap-y-0">
+
+            <div
+              className={`grid grid-cols-1 md:${
+                data ? "grid-cols-2" : "grid-cols-1"
+              } gap-2 gap-y-0`}
+            >
               <div className="flex flex-col gap-1 py-2">
                 <label htmlFor="name" className="text-sm text-gray-600">
-                  Name *
+                  Description *
                 </label>
                 <textarea
                   required
@@ -225,6 +258,17 @@ export default function ProductModal({ closeHandler }) {
                   className={`border outline-none px-3 py-2 rounded-md placeholder:text-sm border-slate-300`}
                 />
               </div>
+              {!isAdd && data && (
+                <div className="p-2 bg-gray-100">
+                  <div className="flex gap-x-3">
+                    <img
+                      src={`${apiUrl}${imagePath}`}
+                      alt="no image"
+                      className="object-fill rounded-lg max-w-[150px]"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="flex gap-x-6">
               <div className="flex gap-x-3 py-2 items-center">
@@ -256,7 +300,7 @@ export default function ProductModal({ closeHandler }) {
                   type="submit"
                   className="px-6 py-2 border border-black text-sm rounded-lg bg-black text-white"
                 >
-                  Add
+                  {isAdd ? "Add" : "Update"}
                 </button>
               </div>
             </div>
