@@ -1,6 +1,8 @@
 import multer from "multer";
 import express from "express";
 import path from "path";
+import fs from "fs-extra";
+
 import { fileURLToPath } from "url";
 
 const router = express.Router();
@@ -63,6 +65,26 @@ router.post("/", upload.single("image"), async (req, res) => {
   res.send(`/uploads/${filename}`);
   //   res.send(`${req.file.path.replace("\\", "/")}`);
   //   res.send(req.file.path);
+});
+
+// @desc    To delete uploaded image
+// @route   GET api/v1/upload/delete
+// @access  Public
+router.post("/delete", async (req, res) => {
+  try {
+    const filePath = req.body.imagePath;
+
+    const file = filePath.substring(
+      filePath.lastIndexOf("/") + 1,
+      filePath.length
+    );
+
+    await fs.remove(`uploads/${file}`);
+
+    res.json("File deleted successfully!");
+  } catch (err) {
+    throw new Error("Error occured while trying to delete the image!");
+  }
 });
 
 export default router;

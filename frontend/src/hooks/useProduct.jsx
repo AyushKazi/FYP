@@ -2,18 +2,21 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { config } from "localforage";
+import { useNavigate } from "react-router-dom";
 
 export default function useProduct() {
   //   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     price: 0,
     description: "",
-    image:null,
+    imagePath: "",
     countInStock: 0,
-    category_id: 1,
-    brand_id: 1,
+    category_id: 0,
+    brand_id: 0,
     featured: 0,
   });
 
@@ -29,21 +32,33 @@ export default function useProduct() {
 
   //   const [update, setUpdate] = useState(false);
 
-  const handleChange = (event) => {
+  const getImagePath = async (file) => {
+    const { data } = await axios.post(
+      "http://localhost:3001/api/v1/uploads",
+      { image: file },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return data;
+  };
+
+  const handleChange = async (event) => {
     let updatedFormData = {};
     if (event.target.name === "image") {
       const files = event.target.files;
-      if (files) {
-        updatedFormData = {
-          ...formData,
-          image: files[0],
-        };
-      }
-    }else if(event.target.name === "featured"){
+
       updatedFormData = {
         ...formData,
-        featured: event.target.checked ? 1 : 0
-      }
+        imagePath: await getImagePath(files[0]),
+      };
+    } else if (event.target.name === "featured") {
+      updatedFormData = {
+        ...formData,
+        featured: event.target.checked ? 1 : 0,
+      };
     } else {
       updatedFormData = {
         ...formData,
@@ -60,10 +75,10 @@ export default function useProduct() {
       formData,
       {
         headers: {
-          "Content-Type" : "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true
+        withCredentials: true,
       }
     );
     return data;
@@ -73,7 +88,6 @@ export default function useProduct() {
     event.preventDefault();
     try {
       // setIsLoading(true);
-
       // if(update && id){
       //   const data = formData
       //   // console.log(data,id)
@@ -81,16 +95,18 @@ export default function useProduct() {
       //   setIsLoading(false);
       //   toast.success("Product updated successfully");
       // }else{
-        const response = await addProduct(formData);
-        console.log(response)
+      const response = await addProduct(formData);
       //   setIsLoading(false);
+      navigate("/admin/products");
       toast.success("Product added successfully");
+      return true;
 
       // }
 
       // return true;
     } catch (error) {
       toast.error(error.response);
+      return false;
     }
   };
 
@@ -104,5 +120,6 @@ export default function useProduct() {
     featured,
     onSubmit,
     handleChange,
+    setFormData,
   };
 }

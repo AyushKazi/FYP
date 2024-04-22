@@ -258,6 +258,7 @@ const findAllProducts = async (req, res) => {
           attributes: ["brand_id", "name"],
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
     res.json(products);
   } catch (error) {

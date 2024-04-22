@@ -64,16 +64,17 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
     orderId,
     userInfo,
   }) => {
+    console.log(total, orderId, userInfo);
     const payload = {
       return_url: "http://localhost:5173/orderComplete",
       website_url: "http://localhost:5173/",
-      amount: 1300,
-      purchase_order_id: "test12",
+      amount: total * 100,
+      purchase_order_id: orderId,
       purchase_order_name: "test",
       customer_info: {
-        name: "Khalti Bahadur",
-        email: "example@gmail.com",
-        phone: "9800000123",
+        name: userInfo.first_name,
+        email: userInfo.email,
+        phone: userInfo.contact_number,
       },
     };
 
@@ -86,13 +87,14 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
       { payment_method: "Khalti", is_paid: 1 },
       "Payment with Khalti successful. Order Completed !"
     );
+    console.log(response);
 
-    console.log();
     const url = response.data.payment_url;
     // console.log(url);
     // navigate(url);
     // if (response) {
     window.location.href = `${url}`;
+
     // }
   };
 
@@ -106,7 +108,7 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
 
       navigate("/orderComplete");
     }
-  }, [success, navigate]);
+  }, [success]);
 
   return (
     <>
