@@ -5,7 +5,7 @@ import {
   registerUser,
   loginUser,
   forgotPassword,
-  getAllUserInfo,
+  getAllUsersInfo,
   getUserProfile,
   logout,
   updatePassword,
@@ -14,6 +14,7 @@ import {
   updateUserDetails,
 } from "../controllers/user-controllers.js";
 import auth from "../middlewares/auth.js";
+import authAdmin from "../middlewares/authAdmin.js";
 
 // public user routes
 router.post("/register", registerUser);
@@ -31,5 +32,5 @@ router.put("/updatePassword", auth, updatePassword);
 router.post("/resetPassword", auth, resetPassword);
 
 //admin routes
-router.get("/getAllUserInfo", auth, getAllUserInfo);
+router.get("/getAllUsersInfo", auth, authAdmin, getAllUsersInfo);
 export default router;

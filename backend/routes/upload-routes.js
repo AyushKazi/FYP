@@ -69,21 +69,23 @@ router.post("/", upload.single("image"), async (req, res) => {
 
 // @desc    To delete uploaded image
 // @route   GET api/v1/upload/delete
+// @access  Public// @desc    To delete uploaded image
+// @route   POST api/v1/upload/delete
 // @access  Public
 router.post("/delete", async (req, res) => {
   try {
     const filePath = req.body.imagePath;
 
-    const file = filePath.substring(
-      filePath.lastIndexOf("/") + 1,
-      filePath.length
-    );
+    const file = path.basename(filePath);
 
-    await fs.remove(`uploads/${file}`);
+    await fs.remove(path.join(__dirname, `../uploads/${file}`));
 
     res.json("File deleted successfully!");
   } catch (err) {
-    throw new Error("Error occured while trying to delete the image!");
+    console.error("Error occurred while trying to delete the image:", err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the image." });
   }
 });
 

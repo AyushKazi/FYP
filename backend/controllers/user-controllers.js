@@ -2,8 +2,11 @@ import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "../models/index.js";
 import asynchandler from "express-async-handler";
+import { Sequelize } from "sequelize";
 
 const User = db.user;
+const Op = Sequelize.Op;
+
 // @desc  add new user
 // @route POST api/v1/user/register
 // @access Public
@@ -169,12 +172,28 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// @desc  get all users info
-// @route GET api/v1/user/
-// @access PRIVATE (ADMIN)
+// @desc    To get all users info
+// @route   POST /api/v1/user/allUsersInfo
+// @access  Protected (auth + admin)
+const getAllUsersInfo = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: {
+        exclude: ["password"],
+      },
 
-const getAllUserInfo = (req, res) => {
-  res.json({ message: "All User profile" });
+      where: {
+        user_id: {
+          [Op.ne]: req.user.id,
+        },
+      },
+    });
+
+    res.json(users);
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
 };
 
 // @desc  forget password
@@ -318,7 +337,7 @@ export {
   updateUserDetails,
   loginUser,
   forgotPassword,
-  getAllUserInfo,
+  getAllUsersInfo,
   getUserProfile,
   logout,
   getAccessToken,
