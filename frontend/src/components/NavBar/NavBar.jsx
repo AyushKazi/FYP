@@ -65,7 +65,7 @@ const NavBar = () => {
             <img
               src={logo}
               alt=""
-              className=" w-30 h-7  ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
+              className=" w-30 h-7  lg:ml-8 my-2 sm:w-34 sm:h-9 md:w-38 md:h-10 lg:w-40 lg:h-13 "
             />
           </Link>
 

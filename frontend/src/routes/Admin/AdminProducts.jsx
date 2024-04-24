@@ -42,7 +42,7 @@ const AdminProducts = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const perpage = 20;
+  const perpage = 3;
   const [totalPages, setTotalPages] = useState(1);
 
   const [idToUpdate, setIdToUpdate] = useState(0);

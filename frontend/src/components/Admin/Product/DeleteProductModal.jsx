@@ -40,10 +40,13 @@ export default function DeleteProductModal({ closeHandler, id }) {
               e.preventDefault();
 
               deleteProduct(id);
-              toast.success("Product deleted successfully");
+              toast.success("Product deleted successfully", {
+                position: "top-right",
+                style: { backgroundColor: "black", color: "white" },
+              });
               const timer = setTimeout(() => {
                 closeHandler();
-              }, 1000);
+              }, 500);
             }}
           >
             <div className="md:pt-8 md:pb-2 md:flex justify-end items-center">

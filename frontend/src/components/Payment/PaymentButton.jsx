@@ -83,10 +83,6 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
       payload
     );
 
-    paymentHandler(
-      { payment_method: "Khalti", is_paid: 1 },
-      "Payment with Khalti successful. Order Completed !"
-    );
     console.log(response);
 
     const url = response.data.payment_url;
@@ -94,6 +90,11 @@ const PaymentButton = ({ paymentMethod, orderId, amount }) => {
     // navigate(url);
     // if (response) {
     window.location.href = `${url}`;
+
+    paymentHandler(
+      { payment_method: "Khalti", is_paid: 1 },
+      "Payment with Khalti successful. Order Completed !"
+    );
 
     // }
   };

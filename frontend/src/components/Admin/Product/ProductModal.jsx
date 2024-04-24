@@ -84,7 +84,7 @@ export default function ProductModal({ closeHandler, isAdd, data }) {
               if (response) {
                 const timer = setTimeout(() => {
                   closeHandler();
-                }, 1000);
+                }, 500);
               }
             }}
           >

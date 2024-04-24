@@ -167,13 +167,13 @@ const Orders = () => {
                           Payment Method : {order.payment_method}
                         </h2>
                         <div
-                          className="bg-red-100 flex items-center gap-x-2 border border-red-200 px-4 py-2 text-start rounded-sm relative"
+                          className="bg-green-100 flex items-center gap-x-2 border border-red-200 px-4 py-2 text-start rounded-sm relative"
                           role="alert"
                         >
                           <strong class="font-bold ">
                             <MdErrorOutline />
                           </strong>
-                          <span class="block sm:inline">Not Paid !</span>
+                          <span class="block sm:inline"> Paid !</span>
                         </div>
                       </div>
 
@@ -183,19 +183,19 @@ const Orders = () => {
                           Shipping Address
                         </h2>
                         <div className="text-left border px-6 py-4  bg-white">
-                          <p className="font-medium text-lg mb-2">Ayush Kazi</p>
-                          <p className="text-gray-600 mb-1">
-                            Email: ayushkazi@gmail.com
+                          <p className="font-medium text-lg mb-2">
+                            Kalyan Bhurtel
                           </p>
                           <p className="text-gray-600 mb-1">
-                            Phone: 9856087898
+                            Email: kalyan@gmail.com
                           </p>
+                          <p className="text-gray-600 mb-1">Phone: 980000001</p>
                           <p className="text-gray-600 mb-1">City: Pokhara</p>
                           <p className="text-gray-600 mb-1">
                             Postal Code: 09809
                           </p>
                           <p className="text-gray-600 mb-1">
-                            Street Address: Main Street
+                            Street Address: Street 2
                           </p>
                           <p className="text-gray-600">Province: 4</p>
                         </div>

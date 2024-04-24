@@ -209,7 +209,7 @@ const Review = ({ reviews, reviewUpdated }) => {
             </>
           ) : (
             <>
-              <div className="border border-red-300 py-2">
+              <div className="border border-gray-300 py-2 px-2">
                 <p>
                   Please{" "}
                   <Link

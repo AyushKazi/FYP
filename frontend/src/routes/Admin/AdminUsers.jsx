@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BiSolidEditAlt } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 const AdminUsers = () => {
@@ -35,7 +37,7 @@ const AdminUsers = () => {
               <th className="p-3 py-4 text-center text-white">Name</th>
               <th className="p-3 py-4 text-center text-white">Contact</th>
               <th className="p-3 py-4 text-center text-white">Email</th>
-              <th className="p-3 py-4 text-center text-white">Role</th>
+              <th className="p-3 py-4 text-center text-white">Options</th>
             </tr>
           </thead>
           <tbody className="bg-white">
@@ -45,7 +47,12 @@ const AdminUsers = () => {
                 <td className="p-3 text-center">{user.first_name}</td>
                 <td className="p-3 text-center">{user.contact_number}</td>
                 <td className="p-3 text-center">{user.email}</td>
-                <td className="p-3 text-center">{user.role}</td>
+                <td className="p-3">
+                  <div className="justify-center flex gap-x-2">
+                    <BiSolidEditAlt className="size-5 cursor-pointer" />
+                    <MdDelete className="size-5 text-red-500 cursor-pointer" />
+                  </div>
+                </td>{" "}
               </tr>
             ))}
           </tbody>

@@ -121,22 +121,24 @@ export default function useProduct() {
 
     return data;
   };
-
   const onSubmit = async (event, id) => {
     event.preventDefault();
     try {
+      let response;
       if (id) {
-        const response = await updateProduct(formData, id);
+        response = await updateProduct(formData, id);
+        toast.success("Product updated successfully", {
+          position: "top-right",
+          style: { backgroundColor: "black", color: "white" },
+        });
       } else {
-        const response = await addProduct(formData);
+        response = await addProduct(formData);
+        toast.success("Product added successfully", {
+          position: "top-right",
+          style: { backgroundColor: "black", color: "white" },
+        });
       }
-      //   setIsLoading(false);
-      toast.success("Product added successfully");
       return true;
-
-      // }
-
-      // return true;
     } catch (error) {
       toast.error(error.response);
       return false;
