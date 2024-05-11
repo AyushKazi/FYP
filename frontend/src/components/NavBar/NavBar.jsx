@@ -76,7 +76,7 @@ const NavBar = () => {
               </p>
             </button>
 
-            <div className="origin-top-right absolute right-0 mt-1 w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
+            <div className="origin-top-right absolute right-0  w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
               <Link
                 to="/catBrandFilter"
                 className="dropdown-item block px-5 py-2 text-sm hover:bg-white hover:text-black"
@@ -130,7 +130,7 @@ const NavBar = () => {
                   Admin
                 </button>
                 {/* Conditionally rendering removed, using hidden and group-hover:block for visibility control */}
-                <div className="origin-top-right absolute right-0 mt-1 w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
+                <div className="origin-top-right absolute right-0  w-30 rounded-md shadow-lg bg-[#2C2C2C] text-white py-1 z-50 hidden group-hover:block">
                   <Link
                     to="/admin/dashboard"
                     className="dropdown-item block px-4 py-2 text-sm hover:bg-white hover:text-black"
@@ -178,7 +178,7 @@ const NavBar = () => {
                 <button className="log hidden text-sm text-white font-medium md:block bg-[#2C2C2C] px-4 py-1 rounded-sm hover:bg-white border hover:border-black hover:text-black transition-all duration-500">
                   My Account
                 </button>
-                <div className="dropdown-menu absolute w-24 right-0 mt-1 bg-[#2C2C2C] text-white rounded-md py-1 z-50 hidden group-hover:block">
+                <div className="dropdown-menu absolute w-24 right-0  bg-[#2C2C2C] text-white rounded-md py-1 z-50 hidden group-hover:block">
                   {" "}
                   {/* Use group-hover to show on hover */}
                   <Link

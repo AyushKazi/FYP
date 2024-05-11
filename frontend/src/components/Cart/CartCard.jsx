@@ -7,7 +7,7 @@ import { apiUrl } from "../Product/ProductCard";
 
 export const CartCard = ({ item }) => {
   const dispatch = useDispatch();
-  console.log(item);
+  // console.log(item);
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };

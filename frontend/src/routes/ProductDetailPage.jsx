@@ -47,7 +47,7 @@ const ProductDetailPage = () => {
 
   //qty deduct
   const handleMinusButton = () => {
-    setQty(qty - 1);
+    if (qty > 1) setQty(qty - 1);
   };
 
   const addToCartHandler = () => {
