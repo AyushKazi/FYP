@@ -269,42 +269,29 @@ const cancelOrder = async (req, res) => {
 // @route   PUT /api/orders
 // @access  Private
 const getOrders = async (req, res) => {
-  const orders = await Order.findAll({
-    where: {
-      createdAt: {
-        [Op.and]: {
-          [Op.gte]: req.params.from,
-          [Op.lte]: req.params.to,
+  try {
+    const orders = await Order.findAll({
+      attributes: {
+        exclude: ["shipping_address_id"],
+      },
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Product,
+          attributes: ["product_id", "name"],
+          through: {
+            attributes: ["orderline_id", "quantity", "line_total"],
+          },
         },
-      },
-    },
-
-    attributes: {
-      exclude: ["shipping_address_id"],
-    },
-
-    order: [["createdAt", "DESC"]],
-
-    include: [
-      {
-        model: Product,
-        attributes: ["product_id", "name"],
-
-        through: {
-          attributes: ["orderline_id", "quantity", "line_total"],
+        {
+          model: ShippingAddress,
         },
-      },
+      ],
+    });
 
-      {
-        model: ShippingAddress,
-      },
-    ],
-  });
-
-  if (orders) {
     res.json(orders);
-  } else {
-    throw new Error(`Orders could not fetched!`);
+  } catch (error) {
+    res.status(500).json({ error: "Orders could not be fetched!" });
   }
 };
 

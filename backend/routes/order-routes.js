@@ -14,6 +14,8 @@ import authAdmin from "../middlewares/authAdmin.js";
 
 // Routes
 router.get("/myorders", auth, getMyOrders);
+router.get("/getAllOrders", auth, authAdmin, getOrders);
+
 router.get("/:id", auth, getOrderByID);
 
 router.post("/", auth, createOrder);
@@ -23,7 +25,6 @@ router.put("/:id/pay", auth, updatePayment);
 router.put("/:id/cancel", auth, cancelOrder);
 
 // Admin
-router.get("/:from/:to", auth, authAdmin, getOrders);
 router.put("/:id", auth, authAdmin, updateOrder);
 
 export default router;
