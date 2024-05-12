@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { IoClose, IoSearch } from "react-icons/io5";
-import { DropdownTableRow } from "../../components/Admin/Common/DropdownTableRow";
 import CategoryModal from "../../components/Admin/Category/CategoryModal"; // Import the CategoryModal component
 import axios from "axios";
 import DeleteCategoryModal from "../../components/Admin/Category/DeleteCategoryModal";
@@ -177,59 +176,6 @@ const AdminCategory = () => {
               );
             })}
           </tbody>
-          {/* <tbody className="bg-white ">
-            {categoriesToDisplay.map((category, index) => (
-              <DropdownTableRow
-                key={category.category_id}
-                colSpanNumber={4}
-                remainingTableRows={
-                  <>
-                    <td className="p-3">{index + 1}</td>
-                    <td className="p-3 ">
-                      {" "}
-                      <img
-                        src={`${apiUrl}${category.imagePath}`}
-                        alt="no image"
-                        className="object-fill rounded-lg max-w-[300px]"
-                      />
-                    </td>
-                    <td className="p-3">{category.name}</td>
-                    <td className="p-3">
-                      <div className="justify-center flex gap-x-2">
-                        <BiSolidEditAlt
-                          onClick={() => {
-                            setIdToUpdate(category.category_id);
-                            toggleUpdateShowModal();
-                          }}
-                          className="size-5 cursor-pointer"
-                        />
-                        <MdDelete
-                          className="size-5 text-red-500 cursor-pointer"
-                          onClick={() => {
-                            setIdToUpdate(category.category_id);
-                            toggleShowDeleteModal();
-                          }}
-                        />
-                      </div>
-                    </td>
-                  </>
-                }
-                dropdownDiv={
-                  <div>
-                    <div className="p-2 bg-gray-100">
-                      <div className="flex gap-x-3">
-                        <img
-                          src={`${apiUrl}${category.imagePath}`}
-                          alt="no image"
-                          className="object-fill rounded-lg max-w-[300px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                }
-              />
-            ))}
-          </tbody> */}
         </table>
         <div className="w-full bg-gray-200 p-2 flex justify-end gap-x-2">
           <div className="w-full bg-gray-200 p-2 flex justify-end gap-x-2">

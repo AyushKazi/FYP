@@ -7,9 +7,20 @@ const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
 
+  const [allBrands, setAllBrands] = useState([]);
+
   const { token } = useSelector((state) => state.token);
 
   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const { data } = await axios.get("http://localhost:3001/api/v1/brands");
+      setAllBrands(data);
+    };
+    fetchBrands();
+  }, []);
+
   useEffect(() => {
     const fetchUsers = async () => {
       const { data } = await axios.get(
@@ -77,6 +88,10 @@ const AdminDashboard = () => {
         <div className="px-6 py-3 bg-white">
           <h2 className="text-2xl mb-2 font-medium">Categories</h2>
           <p className="text-2xl flex justify-center">{allCategories.length}</p>
+        </div>
+        <div className="px-6 py-3 bg-white">
+          <h2 className="text-2xl mb-2 font-medium">Brands</h2>
+          <p className="text-2xl flex justify-center">{allBrands.length}</p>
         </div>
         <div className="px-6 py-3 bg-white">
           <h2 className="text-2xl mb-2 font-medium">Orders</h2>
