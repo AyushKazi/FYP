@@ -42,7 +42,9 @@ const ProductDetailPage = () => {
   // console.log(imagePath);
   //qty add
   const handlePlusButton = () => {
-    setQty(qty + 1);
+    if (qty < productDetails.countInStock) {
+      setQty((prevQty) => prevQty + 1);
+    }
   };
 
   //qty deduct

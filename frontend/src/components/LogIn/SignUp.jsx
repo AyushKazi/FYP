@@ -86,6 +86,7 @@ const SignUp = () => {
               <input
                 type="number"
                 name="contact"
+                min={1}
                 className="contact border border-slate-400 block rounded-sm w-full py-2 px-2 placeholder:text-sm md:placeholder:text-base focus:shadow-lg  focus:outline-slate-400 "
                 placeholder="Contact Number"
                 {...register("contact", { required: true })}

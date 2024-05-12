@@ -120,7 +120,7 @@ export default function ProductModal({ closeHandler, isAdd, data }) {
                   required
                   value={price ?? 0}
                   onChange={handleChange}
-                  min={20}
+                  min={10}
                   name="price"
                   title="price"
                   type="number"
@@ -149,6 +149,7 @@ export default function ProductModal({ closeHandler, isAdd, data }) {
                   name="countInStock"
                   title="countInStock"
                   type="number"
+                  min={0}
                   placeholder="0"
                   className={`border outline-none px-3 py-2 rounded-md placeholder:text-sm border-slate-300`}
                   // className={`border outline-none px-3 py-2 rounded-md placeholder:text-sm ${

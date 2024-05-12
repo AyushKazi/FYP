@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../features/cart/cart-action";
@@ -7,9 +7,20 @@ import { apiUrl } from "../Product/ProductCard";
 
 export const CartCard = ({ item }) => {
   const dispatch = useDispatch();
+  const [qty, setQty] = useState(item.qty);
+
   // console.log(item);
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
+  };
+
+  const handlePlusButton = () => {
+    setQty(qty + 1);
+  };
+
+  //qty deduct
+  const handleMinusButton = () => {
+    if (qty > 1) setQty(qty - 1);
   };
 
   return (
@@ -60,18 +71,24 @@ export const CartCard = ({ item }) => {
 
               {/* quantiry button */}
               <div className="flex items-center border-gray-100">
-                <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-neutral-500 hover:text-neutral-50">
+                <span
+                  onClick={handleMinusButton}
+                  className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-neutral-500 hover:text-neutral-50"
+                >
                   {" "}
                   -{" "}
                 </span>
                 <input
                   className="h-8 w-8 border bg-white text-center text-xs outline-none"
                   type="number"
-                  value={item.qty}
+                  value={qty}
                   min="1"
                   disabled
                 />
-                <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-neutral-500 hover:text-neutral-50">
+                <span
+                  onClick={handlePlusButton}
+                  className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-neutral-500 hover:text-neutral-50"
+                >
                   {" "}
                   +{" "}
                 </span>

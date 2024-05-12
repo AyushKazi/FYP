@@ -1,11 +1,3 @@
-// const notFound = (req, res, next) => {
-//   res.status(404);
-//   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
-
-//   // passing error to next default error middleware
-//   next(error);
-// };
-
 const errorHandler = (err, req, res, next) => {
   console.log(res.statusCode);
   // sometimes 500 error is shown as 200

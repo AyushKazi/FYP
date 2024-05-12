@@ -221,7 +221,7 @@ const forgotPassword = async (req, res) => {
   // frontend link to enter a new password
   const url = `http://localhost:3000/api/v1/user/reset/${accessToken}`;
 
-  console.log(url);
+  // console.log(url);
   res.json({
     message:
       "Password reset email sent to your mail. Please check your mail to reset.",
@@ -235,7 +235,7 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { password } = req.body;
-    console.log(password);
+    // console.log(password);
 
     const passwordHash = await bycrypt.hash(password, 10);
 
