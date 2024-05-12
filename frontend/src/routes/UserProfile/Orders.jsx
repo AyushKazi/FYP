@@ -6,6 +6,7 @@ import { MdErrorOutline } from "react-icons/md";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { TbTruckDelivery } from "react-icons/tb";
 
 // const orders = [
 //   {
@@ -78,6 +79,8 @@ const Orders = () => {
       throw new Error(error);
     }
   }, []);
+
+  console.log(orders);
 
   return (
     <div className="max-w-4xl mx-auto my-6 ">
@@ -167,13 +170,24 @@ const Orders = () => {
                           Payment Method : {order.payment_method}
                         </h2>
                         <div
-                          className="bg-green-100 flex items-center gap-x-2 border border-red-200 px-4 py-2 text-start rounded-sm relative"
+                          className="bg-gray-300 flex items-center gap-x-2 border border-gray-400 px-4 py-2 my-4 text-start rounded-sm relative"
                           role="alert"
                         >
-                          <strong class="font-bold ">
-                            <MdErrorOutline />
-                          </strong>
-                          <span class="block sm:inline"> Paid !</span>
+                          {order.is_paid === 1 ? (
+                            <>
+                              <strong class="font-bold ">
+                                <MdErrorOutline />
+                              </strong>
+                              <span class="block sm:inline"> Paid !</span>
+                            </>
+                          ) : (
+                            <>
+                              <strong class="font-bold ">
+                                <MdErrorOutline />
+                              </strong>
+                              <span class="block sm:inline"> Not Paid !</span>
+                            </>
+                          )}
                         </div>
                       </div>
 
@@ -184,30 +198,40 @@ const Orders = () => {
                         </h2>
                         <div className="text-left border px-6 py-4  bg-white">
                           <p className="font-medium text-lg mb-2">
-                            Kalyan Bhurtel
+                            {order.shipping_address.first_name}{" "}
                           </p>
                           <p className="text-gray-600 mb-1">
-                            Email: kalyan@gmail.com
-                          </p>
-                          <p className="text-gray-600 mb-1">Phone: 980000001</p>
-                          <p className="text-gray-600 mb-1">City: Pokhara</p>
-                          <p className="text-gray-600 mb-1">
-                            Postal Code: 09809
+                            Email: Email: {order.shipping_address.email}
                           </p>
                           <p className="text-gray-600 mb-1">
-                            Street Address: Street 2
+                            Phone: {order.shipping_address.contact_number}
                           </p>
-                          <p className="text-gray-600">Province: 4</p>
+                          <p className="text-gray-600 mb-1">
+                            City: {order.shipping_address.city}
+                          </p>
+                          <p className="text-gray-600 mb-1">
+                            Postal Code: {order.shipping_address.postal_code}
+                          </p>
+                          <p className="text-gray-600 mb-1">
+                            Street Address: {order.shipping_address.street}
+                          </p>
+                          <p className="text-gray-600">
+                            Province: {order.shipping_address.province}
+                          </p>
                         </div>
 
                         <div
-                          className="bg-red-100 flex items-center gap-x-2 border border-red-200 px-4 py-2 my-4 text-start rounded-sm relative"
+                          className="bg-gray-300 flex items-center gap-x-2 border border-gray-400 px-4 py-2 my-4 text-start rounded-sm relative"
                           role="alert"
                         >
-                          <strong class="font-bold ">
-                            <MdErrorOutline />
-                          </strong>
-                          <span class="block sm:inline">Not Delievered !</span>
+                          {order.status !== "Delivered" ? (
+                            <strong className="font-bold ">
+                              <MdErrorOutline />
+                            </strong>
+                          ) : (
+                            <TbTruckDelivery />
+                          )}
+                          <span class="block sm:inline"> {order.status} !</span>
                         </div>
                       </div>
                     </div>

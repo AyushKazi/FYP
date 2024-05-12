@@ -89,6 +89,9 @@ const getMyOrders = async (req, res) => {
             attributes: ["orderline_id", "quantity"],
           },
         },
+        {
+          model: ShippingAddress,
+        },
       ],
     });
 
@@ -278,7 +281,7 @@ const getOrders = async (req, res) => {
       include: [
         {
           model: Product,
-          attributes: ["product_id", "name"],
+          attributes: ["product_id", "name", "price"],
           through: {
             attributes: ["orderline_id", "quantity", "line_total"],
           },

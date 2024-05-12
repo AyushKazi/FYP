@@ -29,7 +29,7 @@ const AdminUsers = () => {
   return (
     <div className="flex justify-center items-center bg-[#D9D9D9] py-10 gap-10 flex-col">
       <h1 className="text-4xl ">Users</h1>
-      <div className="font-light text-lg px-10 xl:w-screen ">
+      <div className="font text-lg px-10 xl:w-screen ">
         <table className="table-auto bg-[#2C2C2C] md:w-full  ">
           <thead className="rounded-lg">
             <tr>
