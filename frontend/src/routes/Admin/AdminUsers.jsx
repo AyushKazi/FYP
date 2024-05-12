@@ -24,7 +24,7 @@ const AdminUsers = () => {
     fetchUsers();
   }, []);
 
-  console.log(users);
+  // console.log(users);
 
   return (
     <div className="flex justify-center items-center bg-[#D9D9D9] py-10 gap-10 flex-col">

@@ -33,7 +33,7 @@ const ProductDetailPage = () => {
 
   const { product } = state;
   const { category, brand, reviews, ...productDetails } = product;
-  console.log(state);
+  // console.log(state);
   // console.log(category);
 
   // const product = products.find((p) => p.product_id === productID);

@@ -23,13 +23,15 @@ const Review = ({ reviews, reviewUpdated }) => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [userHasBought, setUserHasBought] = useState(null);
 
+  console.log(userInfo);
+
   useEffect(() => {
     const check = async () => {
       const { data } = await axios.get(`${apiUrl}/api/v1/orders/myorders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log(data);
+      // console.log(data);
 
       let result = false;
       data.forEach((order) => {
@@ -43,7 +45,7 @@ const Review = ({ reviews, reviewUpdated }) => {
         }
       });
 
-      console.log(result);
+      // console.log(result);
 
       setUserHasBought(result ? result : false);
     };
@@ -143,7 +145,7 @@ const Review = ({ reviews, reviewUpdated }) => {
             )}
           </div>
 
-          {userInfo && userInfo.isAdmin === false ? (
+          {userInfo ? (
             <>
               {userHasBought === null ? (
                 <></>
